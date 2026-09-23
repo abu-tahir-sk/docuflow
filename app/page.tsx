@@ -42,16 +42,61 @@ export default function Home() {
       <main className="flex-1">
         
         {/* 1. HERO SECTION */}
-        <section className="relative w-full pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden min-h-[90vh] flex items-center">
+        <section className="relative w-full pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden min-h-[90vh] flex items-center bg-background transition-colors duration-300">
           {/* Animated Background Gradients */}
-          <div className="absolute top-1/4 -left-1/4 w-full max-w-3xl h-[500px] bg-blue-600/20 dark:bg-blue-600/30 rounded-full blur-[120px] -z-10 mix-blend-screen" />
-          <div className="absolute bottom-1/4 -right-1/4 w-full max-w-3xl h-[500px] bg-purple-600/20 dark:bg-purple-600/30 rounded-full blur-[120px] -z-10 mix-blend-screen" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-background to-background -z-20" />
+          <div className="absolute top-1/4 -left-1/4 w-full max-w-3xl h-[500px] bg-blue-600/20 rounded-full blur-[120px] -z-10 mix-blend-screen" />
+          <div className="absolute bottom-1/4 -right-1/4 w-full max-w-3xl h-[500px] bg-purple-600/20 rounded-full blur-[120px] -z-10 mix-blend-screen" />
+          
+          {/* Glowing Swooshes */}
+          <svg className="absolute inset-0 w-full h-full -z-10 pointer-events-none opacity-100" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 800">
+            <path d="M-100 800 C 400 400, 800 1000, 1600 200" fill="none" stroke="url(#gradient1)" strokeWidth="3" strokeDasharray="10 10" opacity="0.7" />
+            <path d="M-100 600 C 500 800, 900 100, 1600 400" fill="none" stroke="url(#gradient2)" strokeWidth="6" filter="url(#glow)" />
+            <path d="M200 900 C 600 300, 1200 800, 1800 100" fill="none" stroke="url(#gradient3)" strokeWidth="4" opacity="0.9" filter="url(#glow2)" />
+            
+            <defs>
+              <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#38bdf8" />
+                <stop offset="100%" stopColor="#c084fc" />
+              </linearGradient>
+              <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#818cf8" />
+                <stop offset="50%" stopColor="#c084fc" />
+                <stop offset="100%" stopColor="#38bdf8" />
+              </linearGradient>
+              <linearGradient id="gradient3" x1="100%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#c084fc" />
+                <stop offset="100%" stopColor="#818cf8" />
+              </linearGradient>
+              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="glow2" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+          </svg>
+
+          {/* Floating Stars */}
+          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
+             <div className="absolute top-[20%] left-[25%] w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_12px_3px_#60a5fa] animate-pulse" />
+             <div className="absolute top-[35%] left-[55%] w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_15px_4px_#c084fc] animate-pulse delay-150" />
+             <div className="absolute top-[65%] right-[25%] w-1 h-1 bg-cyan-400 rounded-full shadow-[0_0_10px_2px_#22d3ee] animate-pulse delay-300" />
+             <div className="absolute bottom-[25%] left-[35%] w-2 h-2 bg-indigo-400 rounded-full shadow-[0_0_18px_4px_#818cf8] animate-pulse delay-700" />
+             <div className="absolute top-[15%] right-[35%] w-1.5 h-1.5 bg-pink-400 rounded-full shadow-[0_0_12px_3px_#f472b6] animate-pulse delay-500" />
+          </div>
           
           {/* Floating Particles (CSS simulated) */}
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light -z-20" />
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-soft-light -z-20 pointer-events-none" />
 
-          <div className="container px-4 md:px-6 mx-auto relative z-10">
+          <div className="container px-4 md:px-6 mx-auto relative z-10 text-foreground">
             <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
               
               {/* Left Column: Copy */}
@@ -75,7 +120,7 @@ export default function Home() {
                   <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full shadow-lg shadow-blue-500/25 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 transition-all hover:scale-105">
                     Start Free Trial <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 h-14 text-base rounded-full gap-2 border-border/50 hover:bg-muted/50 backdrop-blur-sm">
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 h-14 text-base rounded-full gap-2 border-border/50 hover:bg-muted/50 backdrop-blur-sm text-foreground bg-background/50">
                     Book Demo
                   </Button>
                 </motion.div>
@@ -112,21 +157,23 @@ export default function Home() {
               </motion.div>
 
               {/* Right Column: Floating Dashboard */}
-              <motion.div 
-                initial={{ opacity: 0, x: 40, rotateY: -10 }}
-                animate={{ opacity: 1, x: 0, rotateY: 0 }}
-                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-                className="relative lg:-mr-12 xl:-mr-24 perspective-1000 hidden md:block"
-              >
-                {/* Glowing edge effect */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-transparent to-purple-500/20 rounded-2xl blur-xl" />
-                <div className="absolute -inset-0.5 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-2xl opacity-20 blur-sm" />
-                
-                {/* Dashboard Container */}
-                <div className="relative rounded-2xl overflow-hidden border border-border/50 bg-background/80 backdrop-blur-xl shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500">
-                  <HeroDashboardMockup />
-                </div>
-              </motion.div>
+              <div className="relative lg:-mr-12 xl:-mr-24 hidden md:block" style={{ perspective: "2000px" }}>
+                <motion.div 
+                  initial={{ opacity: 0, x: 80, y: 20, rotateY: -30, rotateX: 15, rotateZ: -10 }}
+                  animate={{ opacity: 1, x: 0, y: 0, rotateY: -20, rotateX: 10, rotateZ: -5 }}
+                  transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+                  style={{ transformStyle: "preserve-3d" }}
+                >
+                  {/* Glowing edge effect */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-blue-500/10 to-purple-500/20 rounded-2xl blur-2xl transform translate-z-[-50px]" />
+                  <div className="absolute -inset-0.5 bg-gradient-to-tr from-cyan-500 via-blue-500 to-purple-500 rounded-2xl opacity-40 blur-[2px] transform translate-z-[-10px]" />
+                  
+                  {/* Dashboard Container */}
+                  <div className="relative rounded-2xl overflow-hidden border border-border/50 bg-background/95 backdrop-blur-xl shadow-2xl transform-gpu hover:scale-[1.02] transition-all duration-500 translate-z-[20px]">
+                    <HeroDashboardMockup />
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </div>
         </section>
