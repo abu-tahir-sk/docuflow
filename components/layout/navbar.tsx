@@ -15,58 +15,51 @@ import {
 
 export function Navbar() {
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 shadow-sm transition-all duration-300">
-      <div className="container flex h-16 items-center mx-auto px-4 sm:px-8">
+    <header className="absolute top-0 z-50 w-full bg-transparent transition-all duration-300 pt-4">
+      <div className="container flex h-14 items-center justify-between mx-auto px-4 md:px-8 max-w-7xl">
         <MobileNav />
         <div className="mr-4 hidden md:flex">
-          <Link href="/" className="mr-6 flex items-center space-x-2 group">
-            <div className="bg-primary/10 p-2 rounded-xl group-hover:bg-primary/20 transition-colors flex items-center justify-center">
-              <FileText className="h-5 w-5 text-primary" />
-              <ArrowRightLeft className="h-3 w-3 text-primary -ml-2 mt-2" />
+          <Link href="/" className="flex items-center space-x-2 group">
+            <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-tr from-cyan-400 to-blue-600">
+              A
             </div>
-            <span className="hidden font-bold sm:inline-block text-xl tracking-tight">
+            <span className="font-bold sm:inline-block text-xl tracking-tight text-white">
               DocuFlow
             </span>
           </Link>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
-            <Link href="/features" className="transition-colors hover:text-primary text-foreground/70">
-              ফিচার
+        </div>
+        
+        {/* Desktop Links (Centered) */}
+        <div className="hidden md:flex flex-1 justify-center">
+          <nav className="flex items-center space-x-8 text-sm font-medium">
+            <Link href="/features" className="flex items-center gap-1 transition-colors hover:text-white text-gray-300">
+              Features <span className="text-[10px] opacity-70">▼</span>
             </Link>
-            <Link href="/solutions" className="transition-colors hover:text-primary text-foreground/70">
-              সমাধান
+            <Link href="/solutions" className="flex items-center gap-1 transition-colors hover:text-white text-gray-300">
+              Solutions <span className="text-[10px] opacity-70">▼</span>
             </Link>
-            <Link href="/how-it-works" className="transition-colors hover:text-primary text-foreground/70">
-              কীভাবে কাজ করে
+            <Link href="/pricing" className="transition-colors hover:text-white text-gray-300">
+              Pricing
             </Link>
-            <Link href="/pricing" className="transition-colors hover:text-primary text-foreground/70">
-              প্রাইসিং
+            <Link href="/docs" className="transition-colors hover:text-white text-gray-300">
+              Docs
             </Link>
-            <Link href="/faq" className="transition-colors hover:text-primary text-foreground/70">
-              FAQ
+            <Link href="/resources" className="flex items-center gap-1 transition-colors hover:text-white text-gray-300">
+              Resources <span className="text-[10px] opacity-70">▼</span>
             </Link>
           </nav>
         </div>
-        <div className="flex flex-1 items-center justify-end space-x-4">
+
+        {/* Right side buttons */}
+        <div className="flex items-center justify-end">
           <nav className="flex items-center space-x-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-3 hidden md:flex gap-1 text-foreground/70">
-                <Globe className="h-4 w-4" />
-                বাংলা ▾
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>বাংলা</DropdownMenuItem>
-                <DropdownMenuItem>English</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
             <ThemeToggle />
-
-            <div className="hidden md:flex space-x-2 ml-2">
-              <Link href="/login" className={buttonVariants({ variant: "ghost" })}>
-                লগইন
+            <div className="hidden md:flex items-center space-x-6 ml-4">
+              <Link href="/login" className="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+                Login
               </Link>
-              <Link href="/register" className={buttonVariants({ variant: "default", className: "shadow-md hover:shadow-lg transition-all" })}>
-                ফ্রি শুরু করুন
+              <Link href="/register" className={buttonVariants({ variant: "default", className: "shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-full px-6 py-1 h-9" })}>
+                Start Free <span className="ml-2">→</span>
               </Link>
             </div>
           </nav>

@@ -42,37 +42,92 @@ export default function Home() {
       <main className="flex-1">
         
         {/* 1. HERO SECTION */}
-        <section className="relative w-full pt-24 pb-32 lg:pt-36 lg:pb-40 overflow-hidden">
-          {/* Subtle Background Glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-primary/10 rounded-full blur-[120px] -z-10" />
+        <section className="relative w-full pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden min-h-[90vh] flex items-center">
+          {/* Animated Background Gradients */}
+          <div className="absolute top-1/4 -left-1/4 w-full max-w-3xl h-[500px] bg-blue-600/20 dark:bg-blue-600/30 rounded-full blur-[120px] -z-10 mix-blend-screen" />
+          <div className="absolute bottom-1/4 -right-1/4 w-full max-w-3xl h-[500px] bg-purple-600/20 dark:bg-purple-600/30 rounded-full blur-[120px] -z-10 mix-blend-screen" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-background to-background -z-20" />
           
-          <div className="container px-4 md:px-6 mx-auto text-center relative z-10">
-            <motion.div initial="hidden" animate="visible" variants={fadeUp} className="space-y-6 max-w-4xl mx-auto">
-              <Badge variant="secondary" className="px-4 py-1.5 text-sm font-medium rounded-full bg-primary/10 text-primary border-primary/20 hover:bg-primary/20">
-                ✨ DocuFlow V1.0 is Live
-              </Badge>
-              <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]">
-                All your business documents, <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">in one place.</span>
-              </h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl leading-relaxed">
-                Manage invoices, quotations, agreements, clients, and payments—everything easily from a modern platform.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-                <Button size="lg" className="px-8 h-12 text-base rounded-full shadow-lg hover:shadow-primary/25 transition-all">
-                  Start for free <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                <Button size="lg" variant="outline" className="px-8 h-12 text-base rounded-full gap-2">
-                  <PlayCircle className="h-5 w-5" /> Watch Demo
-                </Button>
-              </div>
-              <p className="text-sm text-muted-foreground flex items-center justify-center gap-1.5 pt-2">
-                <CheckCircle2 className="h-4 w-4 text-green-500" /> No credit card required
-              </p>
-            </motion.div>
+          {/* Floating Particles (CSS simulated) */}
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-soft-light -z-20" />
 
-            {/* Hero Dashboard Visual */}
-            <HeroDashboardMockup />
+          <div className="container px-4 md:px-6 mx-auto relative z-10">
+            <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+              
+              {/* Left Column: Copy */}
+              <motion.div 
+                initial="hidden" 
+                animate="visible" 
+                variants={staggerContainer} 
+                className="space-y-8 max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
+              >
+                <motion.div variants={fadeUp} className="space-y-4">
+                  <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.05]">
+                    Automate Your <br />
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Workflows.</span>
+                  </h1>
+                  <p className="text-muted-foreground md:text-xl leading-relaxed max-w-[500px] mx-auto lg:mx-0">
+                    AI-powered solutions to boost your productivity.
+                  </p>
+                </motion.div>
+                
+                <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                  <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full shadow-lg shadow-blue-500/25 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 transition-all hover:scale-105">
+                    Start Free Trial <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                  <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 h-14 text-base rounded-full gap-2 border-border/50 hover:bg-muted/50 backdrop-blur-sm">
+                    Book Demo
+                  </Button>
+                </motion.div>
+
+                {/* Stats */}
+                <motion.div variants={fadeUp} className="grid grid-cols-3 gap-4 pt-8 border-t border-border/40">
+                  <div>
+                    <div className="flex items-center justify-center lg:justify-start gap-1.5 text-foreground font-bold text-xl md:text-2xl">
+                      <span className="text-blue-500">~</span> 10K+
+                    </div>
+                    <p className="text-xs md:text-sm text-muted-foreground mt-1">Active Teams</p>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-center lg:justify-start gap-1.5 text-foreground font-bold text-xl md:text-2xl">
+                      <Shield className="h-4 w-4 md:h-5 md:w-5 text-purple-500" /> 99.9%
+                    </div>
+                    <p className="text-xs md:text-sm text-muted-foreground mt-1">Uptime</p>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-center lg:justify-start gap-1.5 text-foreground font-bold text-xl md:text-2xl">
+                      <Zap className="h-4 w-4 md:h-5 md:w-5 text-yellow-500" /> 2.5M+
+                    </div>
+                    <p className="text-xs md:text-sm text-muted-foreground mt-1">Automations Run</p>
+                  </div>
+                </motion.div>
+
+                {/* Brands */}
+                <motion.div variants={fadeUp} className="flex items-center justify-center lg:justify-start gap-6 pt-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                  <div className="font-bold text-xl font-serif">airbnb</div>
+                  <div className="font-bold text-xl flex items-center gap-1"><span className="w-4 h-4 rounded-full bg-foreground inline-block"></span> Spotify</div>
+                  <div className="font-bold text-xl">coinbase</div>
+                  <div className="font-bold text-xl"># slack</div>
+                </motion.div>
+              </motion.div>
+
+              {/* Right Column: Floating Dashboard */}
+              <motion.div 
+                initial={{ opacity: 0, x: 40, rotateY: -10 }}
+                animate={{ opacity: 1, x: 0, rotateY: 0 }}
+                transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+                className="relative lg:-mr-12 xl:-mr-24 perspective-1000 hidden md:block"
+              >
+                {/* Glowing edge effect */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-transparent to-purple-500/20 rounded-2xl blur-xl" />
+                <div className="absolute -inset-0.5 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-2xl opacity-20 blur-sm" />
+                
+                {/* Dashboard Container */}
+                <div className="relative rounded-2xl overflow-hidden border border-border/50 bg-background/80 backdrop-blur-xl shadow-2xl transform-gpu hover:scale-[1.02] transition-transform duration-500">
+                  <HeroDashboardMockup />
+                </div>
+              </motion.div>
+            </div>
           </div>
         </section>
 

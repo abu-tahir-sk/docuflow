@@ -40,9 +40,10 @@ export function MobileNav() {
         </MobileLink>
         <div className="flex flex-col space-y-3 mt-6">
           <MobileLink href="/features" onOpenChange={setOpen}>Features</MobileLink>
-          <MobileLink href="/how-it-works" onOpenChange={setOpen}>How it works</MobileLink>
+          <MobileLink href="/solutions" onOpenChange={setOpen}>Solutions</MobileLink>
           <MobileLink href="/pricing" onOpenChange={setOpen}>Pricing</MobileLink>
-          <MobileLink href="/faq" onOpenChange={setOpen}>FAQ</MobileLink>
+          <MobileLink href="/docs" onOpenChange={setOpen}>Docs</MobileLink>
+          <MobileLink href="/resources" onOpenChange={setOpen}>Resources</MobileLink>
         </div>
         <div className="mt-6 border-t pt-4">
           <h4 className="mb-2 font-medium text-sm text-muted-foreground">Dashboard Menu</h4>
