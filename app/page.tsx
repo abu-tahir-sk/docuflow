@@ -378,21 +378,23 @@ export default function Home() {
             </motion.div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto mb-12">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="aspect-[1/1.4] bg-muted/50 border border-border rounded-xl p-4 flex flex-col hover:border-primary/50 transition-colors shadow-sm group">
-                  <div className="flex-1 bg-background rounded border border-border/50 shadow-sm relative overflow-hidden p-2">
-                     <div className="w-1/3 h-2 bg-primary/20 rounded mb-4" />
-                     <div className="space-y-1">
-                       <div className="w-full h-1.5 bg-muted rounded" />
-                       <div className="w-full h-1.5 bg-muted rounded" />
-                       <div className="w-3/4 h-1.5 bg-muted rounded" />
-                     </div>
+              {[
+                { id: 1, name: "Clean Invoice", img: "/templates/template-1.jpg" },
+                { id: 2, name: "Dark Proposal", img: "/templates/template-2.jpg" },
+                { id: 3, name: "Creative Quote", img: "/templates/template-3.jpg" },
+                { id: 4, name: "Elegant Contract", img: "/templates/template-4.jpg" }
+              ].map((template) => (
+                <div key={template.id} className="aspect-[1/1.4] bg-muted/50 border border-border rounded-xl p-3 flex flex-col hover:border-primary/50 transition-colors shadow-sm group">
+                  <div className="flex-1 bg-background rounded-lg border border-border/50 shadow-sm relative overflow-hidden">
+                     <img src={template.img} alt={template.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                      {/* Hover overlay */}
-                     <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                       <Button size="sm" variant="secondary" className="opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0">Preview</Button>
+                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                       <Button size="sm" variant="secondary" className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0 border-none shadow-xl text-foreground bg-background hover:bg-muted">
+                         Preview
+                       </Button>
                      </div>
                   </div>
-                  <p className="text-sm font-medium mt-3 text-center">Template #{i}</p>
+                  <p className="text-sm font-medium mt-3 text-center">{template.name}</p>
                 </div>
               ))}
             </div>
