@@ -14,7 +14,7 @@ export function Footer() {
               <span className="font-bold text-xl tracking-tight">DocuFlow</span>
             </Link>
             <p className="text-muted-foreground text-sm max-w-xs mb-6">
-              আপনার ব্যবসার সব ডকুমেন্ট, ইনভয়েস এবং ক্লায়েন্ট ম্যানেজমেন্ট—সবকিছু সহজে পরিচালনা করুন একটি আধুনিক প্ল্যাটফর্ম থেকে।
+              Manage all your business documents, invoices, and clients easily from a modern platform.
             </p>
             <div className="flex items-center space-x-4">
               <Link href="#" className="text-muted-foreground hover:text-primary transition-colors">
@@ -32,26 +32,26 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Product</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">ফিচার</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">প্রাইসিং</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">ডকুমেন্ট</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">আপডেট</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Features</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Pricing</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Documents</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Updates</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-semibold mb-4">Company</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">আমাদের সম্পর্কে</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">যোগাযোগ</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">ক্যারিয়ার</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">About Us</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Contact</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Careers</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li><Link href="#" className="hover:text-primary transition-colors">সাহায্য</Link></li>
+              <li><Link href="#" className="hover:text-primary transition-colors">Help</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">FAQ</Link></li>
               <li><Link href="#" className="hover:text-primary transition-colors">Documentation</Link></li>
             </ul>
@@ -59,7 +59,7 @@ export function Footer() {
         </div>
 
         <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-          <p>© 2026 DocuFlow. সর্বস্বত্ব সংরক্ষিত।</p>
+          <p>© 2026 DocuFlow. All rights reserved.</p>
           <div className="flex items-center space-x-4">
             <Link href="#" className="hover:text-primary transition-colors">Privacy</Link>
             <Link href="#" className="hover:text-primary transition-colors">Terms</Link>

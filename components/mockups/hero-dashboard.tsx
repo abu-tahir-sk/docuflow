@@ -41,8 +41,8 @@ export function HeroDashboardMockup() {
           <div className="flex-1 p-6 md:p-8 flex flex-col gap-6 overflow-hidden">
             <div className="flex justify-between items-center">
               <div>
-                <h3 className="text-xl font-bold tracking-tight">স্বাগতম, আবু!</h3>
-                <p className="text-sm text-muted-foreground">আপনার আজকের ব্যবসার হিসাব</p>
+                <h3 className="text-xl font-bold tracking-tight">Welcome, Abu!</h3>
+                <p className="text-sm text-muted-foreground">Your business overview today</p>
               </div>
               <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center">
                 <Users className="h-5 w-5 text-muted-foreground" />
@@ -51,7 +51,7 @@ export function HeroDashboardMockup() {
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               <Card className="p-4 bg-primary/5 border-primary/20">
-                <p className="text-sm text-muted-foreground mb-1">মোট আয়</p>
+                <p className="text-sm text-muted-foreground mb-1">Total Revenue</p>
                 <h4 className="text-2xl font-bold">₹2.4L</h4>
                 <p className="text-xs text-green-500 flex items-center mt-1">
                   <ArrowUpRight className="h-3 w-3 mr-1" /> +12.5%
@@ -93,7 +93,7 @@ export function HeroDashboardMockup() {
           <CheckCircle2 className="h-5 w-5 text-green-500" />
         </div>
         <div>
-          <p className="text-xs text-muted-foreground">পেমেন্ট গ্রহণ হয়েছে</p>
+          <p className="text-xs text-muted-foreground">Payment Received</p>
           <p className="font-bold">₹25,000</p>
         </div>
       </motion.div>

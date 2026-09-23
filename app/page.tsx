@@ -52,22 +52,22 @@ export default function Home() {
                 ✨ DocuFlow V1.0 is Live
               </Badge>
               <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl leading-[1.1]">
-                আপনার ব্যবসার সব ডকুমেন্ট, <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">এক জায়গায়।</span>
+                All your business documents, <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-500">in one place.</span>
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl leading-relaxed">
-                ইনভয়েস, কোটেশন, চুক্তিপত্র, ক্লায়েন্ট এবং পেমেন্ট—সবকিছু সহজে পরিচালনা করুন একটি আধুনিক প্ল্যাটফর্ম থেকে।
+                Manage invoices, quotations, agreements, clients, and payments—everything easily from a modern platform.
               </p>
               
               <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                 <Button size="lg" className="px-8 h-12 text-base rounded-full shadow-lg hover:shadow-primary/25 transition-all">
-                  ফ্রি শুরু করুন <ArrowRight className="ml-2 h-4 w-4" />
+                  Start for free <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
                 <Button size="lg" variant="outline" className="px-8 h-12 text-base rounded-full gap-2">
-                  <PlayCircle className="h-5 w-5" /> ডেমো দেখুন
+                  <PlayCircle className="h-5 w-5" /> Watch Demo
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground flex items-center justify-center gap-1.5 pt-2">
-                <CheckCircle2 className="h-4 w-4 text-green-500" /> কোনো ক্রেডিট কার্ড প্রয়োজন নেই
+                <CheckCircle2 className="h-4 w-4 text-green-500" /> No credit card required
               </p>
             </motion.div>
 
@@ -96,9 +96,9 @@ export default function Home() {
         <section className="py-24 bg-background">
           <div className="container px-4 mx-auto text-center max-w-5xl">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeUp} className="space-y-4 mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">শুধু ডকুমেন্ট তৈরি নয়—পুরো workflow পরিচালনা করুন।</h2>
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight">Not just creating documents—manage your entire workflow.</h2>
               <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
-                Client থেকে payment পর্যন্ত প্রতিটি ধাপ এক জায়গা থেকে পরিচালনা করুন।
+                Manage every step from client to payment from one place.
               </p>
             </motion.div>
 
@@ -151,9 +151,9 @@ export default function Home() {
                 <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-2xl mb-2">
                   <Calculator className="h-6 w-6 text-primary" />
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">পেশাদার ইনভয়েস তৈরি করুন কয়েক মিনিটে।</h2>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Create professional invoices in minutes.</h2>
                 <p className="text-lg text-muted-foreground">
-                  আপনার ব্র্যান্ডের সাথে মানানসই সুন্দর ইনভয়েস তৈরি করুন। অটোমেটিক ট্যাক্স ক্যালকুলেশন এবং পেমেন্ট ট্র্যাকিং।
+                  Create beautiful invoices that match your brand. Automatic tax calculation and payment tracking.
                 </p>
                 <ul className="space-y-3 pt-4">
                   {[
@@ -174,7 +174,7 @@ export default function Home() {
         <section className="py-24 bg-background">
           <div className="container px-4 mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Quotation থেকে Payment—সবকিছু connected।</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">From Quotation to Payment—everything is connected.</h2>
             </div>
             
             <div className="relative max-w-5xl mx-auto">
@@ -189,11 +189,11 @@ export default function Home() {
                 className="grid grid-cols-2 md:grid-cols-5 gap-4 relative z-10"
               >
                 {[
-                  { title: "কোটেশন", icon: FileText, color: "text-blue-500", bg: "bg-blue-500/10" },
-                  { title: "পাঠানো হয়েছে", icon: Zap, color: "text-orange-500", bg: "bg-orange-500/10" },
-                  { title: "ক্লায়েন্ট গ্রহণ করেছে", icon: CheckCircle2, color: "text-green-500", bg: "bg-green-500/10" },
-                  { title: "ইনভয়েস", icon: FileBadge, color: "text-purple-500", bg: "bg-purple-500/10" },
-                  { title: "পেমেন্ট", icon: Shield, color: "text-primary", bg: "bg-primary/10" },
+                  { title: "Quotation", icon: FileText, color: "text-blue-500", bg: "bg-blue-500/10" },
+                  { title: "Sent", icon: Zap, color: "text-orange-500", bg: "bg-orange-500/10" },
+                  { title: "Client Accepted", icon: CheckCircle2, color: "text-green-500", bg: "bg-green-500/10" },
+                  { title: "Invoice", icon: FileBadge, color: "text-purple-500", bg: "bg-purple-500/10" },
+                  { title: "Payment", icon: Shield, color: "text-primary", bg: "bg-primary/10" },
                 ].map((step, i) => (
                   <motion.div key={i} variants={fadeUp} className="bg-card border border-border p-4 rounded-xl shadow-sm flex flex-col items-center text-center gap-3 hover:border-primary/50 transition-colors">
                     <div className={`p-3 rounded-full ${step.bg}`}>
@@ -212,9 +212,9 @@ export default function Home() {
           <div className="container px-4 mx-auto">
             <div className="grid md:grid-cols-2 gap-16 items-center">
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="space-y-6 order-2 md:order-1">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">আপনার সব ক্লায়েন্ট, সব তথ্য এক জায়গায়।</h2>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">All your clients, all information in one place.</h2>
                 <p className="text-lg text-muted-foreground">
-                  ক্লায়েন্টের কন্টাক্ট ডিটেইলস থেকে শুরু করে তাদের সব ইনভয়েস, পেমেন্ট হিস্ট্রি এবং এগ্রিমেন্ট—সবকিছু একটি ড্যাশবোর্ডে।
+                  From client contact details to all their invoices, payment history, and agreements—everything on one dashboard.
                 </p>
                 <div className="grid grid-cols-2 gap-4 pt-4">
                   {["Client history", "Invoice history", "Payment history", "Quotations", "Agreements"].map((item, i) => (
@@ -235,9 +235,9 @@ export default function Home() {
         <section className="py-24 bg-background">
           <div className="container px-4 mx-auto text-center max-w-5xl space-y-16">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp}>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">চুক্তিপত্র তৈরি করুন, স্বাক্ষর করুন, সংরক্ষণ করুন।</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Create, sign, and save agreements.</h2>
               <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto mb-12">
-                ডিজিটাল স্বাক্ষর দিয়ে ডকুমেন্ট সম্পূর্ণ করুন এবং সুরক্ষিত ক্লাউডে সংরক্ষণ করুন।
+                Complete documents with digital signatures and save them in the secure cloud.
               </p>
               <AgreementPreviewMockup />
             </motion.div>
@@ -252,9 +252,9 @@ export default function Home() {
                 <AnalyticsDashboardMockup />
               </motion.div>
               <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="space-y-6">
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">আপনার ব্যবসার হিসাব বুঝুন এক নজরে।</h2>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Understand your business finances at a glance.</h2>
                 <p className="text-lg text-muted-foreground">
-                  কোন ক্লায়েন্ট কত টাকার কাজ দিয়েছে, কত পেমেন্ট বাকি আছে এবং আপনার ব্যবসার মাসিক গ্রোথ—সবকিছু পরিষ্কারভাবে দেখুন।
+                  See clearly which client has given how much work, pending payments, and your business's monthly growth.
                 </p>
                 <div className="flex flex-wrap gap-3 pt-4">
                   {["Monthly revenue", "Paid invoices", "Pending invoices", "Top clients"].map((badge, i) => (
@@ -272,9 +272,9 @@ export default function Home() {
         <section className="py-24 bg-background">
           <div className="container px-4 mx-auto text-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="space-y-4 mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">আপনার ব্র্যান্ডের মতো দেখতে ডকুমেন্ট।</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Documents that look like your brand.</h2>
               <p className="text-muted-foreground md:text-lg max-w-2xl mx-auto">
-                আমাদের প্রফেশনাল টেমপ্লেট লাইব্রেরি থেকে বেছে নিন আপনার পছন্দের ডিজাইন।
+                Choose your favorite design from our professional template library.
               </p>
             </motion.div>
             
@@ -299,7 +299,7 @@ export default function Home() {
             </div>
             
             <Button variant="outline" size="lg" className="rounded-full">
-              সব Template দেখুন →
+              View all Templates →
             </Button>
           </div>
         </section>
@@ -308,9 +308,9 @@ export default function Home() {
         <section className="py-24 bg-slate-950 text-slate-50 dark:bg-background dark:text-foreground border-y border-border/50">
           <div className="container px-4 mx-auto text-center">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="space-y-4 mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">আপনার ব্যবসার তথ্য নিরাপদ রাখুন।</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Keep your business information safe.</h2>
               <p className="text-slate-400 dark:text-muted-foreground md:text-lg max-w-2xl mx-auto">
-                এন্টারপ্রাইজ গ্রেড সিকিউরিটি দিয়ে আপনার সব ডেটা সুরক্ষিত।
+                All your data is protected with enterprise-grade security.
               </p>
             </motion.div>
 
@@ -336,7 +336,7 @@ export default function Home() {
         <section className="py-24 bg-background">
           <div className="container px-4 mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">সহজ প্রাইসিং, কোনো লুকানো চার্জ নেই।</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">Simple pricing, no hidden charges.</h2>
             </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -346,7 +346,7 @@ export default function Home() {
                   <h3 className="text-2xl font-bold mb-2">Free</h3>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-bold">₹0</span>
-                    <span className="text-muted-foreground">/ মাস</span>
+                    <span className="text-muted-foreground">/ month</span>
                   </div>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
@@ -356,7 +356,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full" variant="outline" size="lg">ফ্রি শুরু করুন</Button>
+                <Button className="w-full" variant="outline" size="lg">Start for free</Button>
               </Card>
 
               {/* Pro Plan */}
@@ -368,7 +368,7 @@ export default function Home() {
                   <h3 className="text-2xl font-bold mb-2">Pro</h3>
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-bold">₹499</span>
-                    <span className="text-muted-foreground">/ মাস</span>
+                    <span className="text-muted-foreground">/ month</span>
                   </div>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
@@ -378,7 +378,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full" size="lg">Pro শুরু করুন</Button>
+                <Button className="w-full" size="lg">Start Pro</Button>
               </Card>
             </div>
           </div>
@@ -388,14 +388,14 @@ export default function Home() {
         <section className="py-24 bg-muted/20 border-t border-border/50">
           <div className="container px-4 mx-auto max-w-3xl">
             <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">সাধারণ জিজ্ঞাসা (FAQ)</h2>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Frequently Asked Questions (FAQ)</h2>
             </div>
             <div className="space-y-6">
               {[
-                { q: "DocuFlow কী?", a: "DocuFlow একটি আধুনিক প্ল্যাটফর্ম যার মাধ্যমে আপনি আপনার ব্যবসার ইনভয়েস, কোটেশন, চুক্তিপত্র এবং ক্লায়েন্ট সহজেই পরিচালনা করতে পারবেন।" },
-                { q: "আমি কি PDF download করতে পারব?", a: "হ্যাঁ, আপনি যেকোনো ডকুমেন্ট PDF হিসেবে ডাউনলোড করতে পারবেন অথবা সরাসরি ক্লায়েন্টকে ইমেইল করতে পারবেন।" },
-                { q: "একাধিক team member যোগ করা যাবে?", a: "হ্যাঁ, আমাদের Pro প্ল্যানে আপনি একাধিক মেম্বার যোগ করে রোল-বেসড অ্যাক্সেস দিতে পারবেন।" },
-                { q: "Invoice-এ GST যোগ করা যাবে?", a: "হ্যাঁ, আপনি প্রতিটি আইটেমের সাথে কাস্টম ট্যাক্স বা GST যোগ করতে পারবেন।" },
+                { q: "What is DocuFlow?", a: "DocuFlow is a modern platform where you can easily manage your business invoices, quotations, agreements, and clients." },
+                { q: "Can I download PDFs?", a: "Yes, you can download any document as a PDF or email it directly to the client." },
+                { q: "Can I add multiple team members?", a: "Yes, in our Pro plan, you can add multiple members and give role-based access." },
+                { q: "Can I add GST to invoices?", a: "Yes, you can add custom tax or GST with each item." },
               ].map((faq, i) => (
                 <div key={i} className="bg-background p-6 rounded-xl border border-border shadow-sm">
                   <h4 className="font-bold text-lg mb-2">{faq.q}</h4>
@@ -410,13 +410,13 @@ export default function Home() {
         <section className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-background to-primary/5 -z-10" />
           <div className="container px-4 mx-auto text-center max-w-3xl space-y-8">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">আজ থেকেই আপনার ব্যবসার ডকুমেন্ট গুছিয়ে নিন।</h2>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Organize your business documents from today.</h2>
             <p className="text-xl text-muted-foreground">
-              Invoice, quotation এবং client management—সবকিছু এক জায়গায়।
+              Invoice, quotation, and client management—everything in one place.
             </p>
             <div className="pt-4">
               <Button size="lg" className="px-10 h-14 text-lg rounded-full shadow-xl hover:shadow-primary/25 transition-all hover:scale-105">
-                ফ্রি শুরু করুন →
+                Start for free →
               </Button>
             </div>
           </div>

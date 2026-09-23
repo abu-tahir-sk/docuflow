@@ -19,7 +19,7 @@ export function AnalyticsDashboardMockup() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <Card className="p-4 border-border/50 shadow-sm bg-background/50">
           <div className="flex justify-between items-start mb-2">
-            <p className="text-xs text-muted-foreground">মোট আয়</p>
+            <p className="text-xs text-muted-foreground">Total Revenue</p>
             <DollarSign className="h-4 w-4 text-primary" />
           </div>
           <h4 className="text-xl font-bold">₹4,82,500</h4>
