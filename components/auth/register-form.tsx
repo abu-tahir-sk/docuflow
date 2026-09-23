@@ -39,6 +39,12 @@ export function RegisterForm() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  
+  // OTP States
+  const [isOtpMode, setIsOtpMode] = useState(false)
+  const [otp, setOtp] = useState("")
+  const [registeredEmail, setRegisteredEmail] = useState("")
+  const [registeredPassword, setRegisteredPassword] = useState("")
 
   const {
     register,
@@ -76,29 +82,75 @@ export function RegisterForm() {
         throw new Error(errorData.message || "Failed to register")
       }
 
-      // Automatically sign in after registration
-      const signInResponse = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      })
+      const responseData = await response.json()
 
-      if (signInResponse?.error) {
-        toast.error("Account created, but couldn't sign in automatically.")
-        router.push("/login")
-      } else {
-        setIsSuccess(true)
-        toast.success("Account created successfully!")
-        
-        // Wait a moment so user can see success state before redirect
-        setTimeout(() => {
-          router.push("/dashboard")
-          router.refresh()
-        }, 1500)
+      if (responseData.requireOtp) {
+        setRegisteredEmail(data.email)
+        setRegisteredPassword(data.password)
+        setIsOtpMode(true)
+        toast.success("OTP sent to your email (check console)")
+        setIsLoading(false)
+        return
       }
+
+      // Legacy fallback if no OTP required
+      await signInWithCredentials(data.email, data.password)
+
     } catch (error: any) {
       toast.error(error.message || "Something went wrong. Please try again.")
       setIsLoading(false)
+    }
+  }
+
+  async function handleVerifyOtp(e: React.FormEvent) {
+    e.preventDefault()
+    if (otp.length !== 6) {
+      toast.error("Please enter a 6-digit OTP")
+      return
+    }
+
+    setIsLoading(true)
+    try {
+      const response = await fetch("/api/auth/verify-otp", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: registeredEmail,
+          otp,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || "Invalid OTP")
+      }
+
+      toast.success("Email verified successfully!")
+      await signInWithCredentials(registeredEmail, registeredPassword)
+    } catch (error: any) {
+      toast.error(error.message || "Invalid or expired OTP")
+      setIsLoading(false)
+    }
+  }
+
+  async function signInWithCredentials(email: string, password: string) {
+    const signInResponse = await signIn("credentials", {
+      email: email,
+      password: password,
+      redirect: false,
+    })
+
+    if (signInResponse?.error) {
+      toast.error("Account verified, but couldn't sign in automatically.")
+      router.push("/login")
+    } else {
+      setIsSuccess(true)
+      
+      // Wait a moment so user can see success state before redirect
+      setTimeout(() => {
+        router.push("/dashboard")
+        router.refresh()
+      }, 1500)
     }
   }
 
@@ -115,6 +167,55 @@ export function RegisterForm() {
           Welcome to DocuFlow. Redirecting you to the dashboard...
         </p>
         <Loader2 className="mx-auto h-6 w-6 animate-spin text-primary" />
+      </div>
+    )
+  }
+
+  if (isOtpMode) {
+    return (
+      <div className="w-full">
+        <div className="mb-8">
+          <h2 className="text-2xl font-semibold tracking-tight">Verify your email</h2>
+          <p className="text-sm text-muted-foreground mt-2">
+            We've sent a 6-digit code to <span className="font-medium text-foreground">{registeredEmail}</span>
+          </p>
+        </div>
+        
+        <form onSubmit={handleVerifyOtp} className="space-y-6">
+          <div className="space-y-2">
+            <Label htmlFor="otp">One-Time Password (OTP)</Label>
+            <Input
+              id="otp"
+              placeholder="123456"
+              maxLength={6}
+              value={otp}
+              onChange={(e) => setOtp(e.target.value.replace(/[^0-9]/g, ""))}
+              disabled={isLoading}
+              className="text-center text-2xl tracking-widest h-14"
+            />
+          </div>
+          
+          <Button type="submit" className="w-full" disabled={isLoading || otp.length !== 6}>
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Verifying...
+              </>
+            ) : (
+              "Verify Email"
+            )}
+          </Button>
+          
+          <div className="text-center text-sm">
+            <button 
+              type="button" 
+              onClick={() => setIsOtpMode(false)}
+              className="text-muted-foreground hover:text-foreground transition-colors"
+            >
+              Back to registration
+            </button>
+          </div>
+        </form>
       </div>
     )
   }
@@ -200,7 +301,7 @@ export function RegisterForm() {
           {isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              Creating account...
+              Sending OTP...
             </>
           ) : (
             "Create account"

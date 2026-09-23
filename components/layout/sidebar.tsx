@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site"
 
 import Image from "next/image"
 import logoImage from "@/public/logo-v3.jpg"
+import { signOut } from "next-auth/react"
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -59,6 +60,7 @@ export function Sidebar() {
               Support
             </Link>
             <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
               className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-muted-foreground transition-all hover:bg-muted hover:text-destructive cursor-pointer"
             >
               <LogOut className="h-4 w-4" />
