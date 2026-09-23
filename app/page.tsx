@@ -81,7 +81,7 @@ export default function Home() {
             
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-semibold tracking-tight leading-[1.1] text-foreground mb-6 w-full max-w-4xl mx-auto">
               Your Projects. Your Team. One <br className="hidden md:block" />
-              Powerful Dashboard.
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500">Powerful Dashboard.</span>
             </motion.h1>
             
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-muted-foreground text-base md:text-lg max-w-[650px] mx-auto mb-8 leading-relaxed font-sans">
@@ -89,7 +89,7 @@ export default function Home() {
             </motion.p>
             
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.3 }} className="relative z-50">
-              <Button className="bg-[#5b61f4] hover:bg-[#4f54d4] text-white rounded-full px-10 h-14 text-[17px] font-medium shadow-[0_0_20px_rgba(91,97,244,0.3)] dark:shadow-[0_0_40px_rgba(91,97,244,0.6)] border border-[#7a7ff7]/50 transition-all hover:scale-105 font-sans">
+              <Button className="bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 hover:opacity-90 text-white rounded-full px-10 h-14 text-[17px] font-medium shadow-[0_0_20px_rgba(91,97,244,0.3)] dark:shadow-[0_0_40px_rgba(91,97,244,0.6)] border-0 transition-all hover:scale-105 font-sans">
                 Try DocuFlow Free
               </Button>
             </motion.div>
@@ -479,7 +479,7 @@ export default function Home() {
                     </li>
                   ))}
                 </ul>
-                <Button className="w-full" size="lg">Start Pro</Button>
+                <Button className="w-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 hover:opacity-90 text-white border-0" size="lg">Start Pro</Button>
               </Card>
             </div>
           </div>
@@ -516,7 +516,7 @@ export default function Home() {
               Invoice, quotation, and client management—everything in one place.
             </p>
             <div className="pt-4">
-              <Button size="lg" className="px-10 h-14 text-lg rounded-full shadow-xl hover:shadow-primary/25 transition-all hover:scale-105">
+              <Button size="lg" className="px-10 h-14 text-lg rounded-full shadow-xl hover:shadow-primary/25 transition-all hover:scale-105 bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500 text-white hover:opacity-90 border-0">
                 Start for free →
               </Button>
             </div>

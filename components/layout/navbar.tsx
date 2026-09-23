@@ -1,5 +1,6 @@
 "use client"
 
+import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { FileText, ArrowRightLeft, Globe } from "lucide-react"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -14,6 +15,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 export function Navbar() {
+  const pathname = usePathname()
+  
   return (
     <header className="fixed top-6 z-50 w-full flex justify-center pointer-events-none">
       <div className="container px-4 flex justify-center w-full max-w-4xl">
@@ -38,19 +41,35 @@ export function Navbar() {
 
             {/* Desktop Links */}
             <nav className="hidden md:flex items-center space-x-6 text-[14px] font-sans font-medium text-muted-foreground">
-              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-              <Link href="/features" className="hover:text-foreground transition-colors">Features</Link>
-              <Link href="/why-us" className="hover:text-foreground transition-colors">Why us</Link>
-              <Link href="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
-              <Link href="/faq" className="hover:text-foreground transition-colors">FAQ</Link>
-              <Link href="/login" className="hover:text-foreground transition-colors">Log in</Link>
+              {[
+                { href: "/", label: "Home" },
+                { href: "/features", label: "Features" },
+                { href: "/why-us", label: "Why us" },
+                { href: "/pricing", label: "Pricing" },
+                { href: "/faq", label: "FAQ" },
+                { href: "/login", label: "Log in" },
+              ].map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link 
+                    key={link.href} 
+                    href={link.href} 
+                    className={`relative py-1 transition-colors hover:text-foreground ${isActive ? 'text-foreground font-semibold' : ''} group`}
+                  >
+                    {link.label}
+                    <span 
+                      className={`absolute left-0 bottom-0 w-full h-[2px] bg-[#5b61f4] rounded-full transition-transform duration-300 origin-left ${isActive ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`} 
+                    />
+                  </Link>
+                )
+              })}
             </nav>
           </div>
 
           {/* Right: Buttons */}
           <div className="flex items-center space-x-3">
             <ThemeToggle />
-            <Link href="/register" className="bg-foreground hover:bg-foreground/90 text-background px-6 py-2 rounded-full text-[14px] font-semibold transition-colors">
+            <Link href="/register" className="bg-[#5b61f4] hover:bg-[#4f54d4] text-white px-6 py-2 rounded-full text-[14px] font-semibold transition-colors">
               Sign up
             </Link>
           </div>
