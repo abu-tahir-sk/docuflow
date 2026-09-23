@@ -15,58 +15,47 @@ import {
 
 export function Navbar() {
   return (
-    <header className="absolute top-0 z-50 w-full bg-transparent pt-6">
-      <div className="container mx-auto px-4 md:px-6 flex items-center justify-between h-14">
-        
-        {/* Left: Logo */}
-        <div className="flex items-center lg:w-1/4">
-          <div className="md:hidden mr-2">
-            <MobileNav />
-          </div>
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 to-blue-600">
-              A
+    <header className="fixed top-6 z-50 w-full flex justify-center pointer-events-none">
+      <div className="container px-4 flex justify-center w-full max-w-4xl">
+        <div className="flex items-center justify-between px-2 py-2 bg-background/60 dark:bg-[#12121a]/60 backdrop-blur-xl border border-border/50 dark:border-white/10 rounded-full w-full shadow-lg dark:shadow-2xl pointer-events-auto transition-colors duration-300">
+          
+          {/* Left: Logo & Links */}
+          <div className="flex items-center pl-1">
+            <div className="md:hidden mr-2">
+              <MobileNav />
             </div>
-            <span className="font-semibold sm:inline-block text-[22px] tracking-tight text-foreground">
-              DocuFlow
-            </span>
-          </Link>
-        </div>
-        
-        {/* Center: Desktop Links */}
-        <div className="hidden md:flex justify-center flex-1">
-          <nav className="flex items-center space-x-8 text-[15px] font-medium">
-            <Link href="/features" className="flex items-center gap-1.5 transition-colors hover:text-foreground text-foreground/70">
-              Features <span className="text-[9px] opacity-60">▼</span>
+            
+            {/* Logo Icon */}
+            <Link href="/" className="bg-[#5b61f4] hover:bg-[#4f54d4] transition-colors rounded-full w-9 h-9 flex items-center justify-center mr-6 shadow-[0_0_15px_rgba(91,97,244,0.5)]">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-white">
+                <circle cx="18" cy="5" r="3" />
+                <circle cx="6" cy="12" r="3" />
+                <circle cx="18" cy="19" r="3" />
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+              </svg>
             </Link>
-            <Link href="/solutions" className="flex items-center gap-1.5 transition-colors hover:text-foreground text-foreground/70">
-              Solutions <span className="text-[9px] opacity-60">▼</span>
-            </Link>
-            <Link href="/pricing" className="transition-colors hover:text-foreground text-foreground/70">
-              Pricing
-            </Link>
-            <Link href="/docs" className="transition-colors hover:text-foreground text-foreground/70">
-              Docs
-            </Link>
-            <Link href="/resources" className="flex items-center gap-1.5 transition-colors hover:text-foreground text-foreground/70">
-              Resources <span className="text-[9px] opacity-60">▼</span>
-            </Link>
-          </nav>
-        </div>
 
-        {/* Right: Buttons */}
-        <div className="flex items-center justify-end lg:w-1/4 space-x-2">
-          <ThemeToggle />
-          <div className="hidden md:flex items-center space-x-5 ml-4">
-            <Link href="/login" className="text-[15px] font-medium text-foreground/70 hover:text-foreground transition-colors">
-              Login
-            </Link>
-            <Link href="/register" className={buttonVariants({ variant: "default", className: "shadow-md hover:shadow-lg transition-all bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-full px-7 h-10" })}>
-              Start Free <span className="ml-2 font-normal text-lg leading-none">→</span>
+            {/* Desktop Links */}
+            <nav className="hidden md:flex items-center space-x-6 text-[14px] font-sans font-medium text-muted-foreground">
+              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+              <Link href="/features" className="hover:text-foreground transition-colors">Features</Link>
+              <Link href="/why-us" className="hover:text-foreground transition-colors">Why us</Link>
+              <Link href="/pricing" className="hover:text-foreground transition-colors">Pricing</Link>
+              <Link href="/faq" className="hover:text-foreground transition-colors">FAQ</Link>
+              <Link href="/login" className="hover:text-foreground transition-colors">Log in</Link>
+            </nav>
+          </div>
+
+          {/* Right: Buttons */}
+          <div className="flex items-center space-x-3">
+            <ThemeToggle />
+            <Link href="/register" className="bg-foreground hover:bg-foreground/90 text-background px-6 py-2 rounded-full text-[14px] font-semibold transition-colors">
+              Sign up
             </Link>
           </div>
+          
         </div>
-        
       </div>
     </header>
   )

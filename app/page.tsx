@@ -42,40 +42,21 @@ export default function Home() {
       <main className="flex-1">
         
         {/* 1. HERO SECTION */}
-        <section className="relative w-full pt-24 pb-20 lg:pt-32 lg:pb-32 overflow-hidden min-h-[90vh] flex items-center bg-background transition-colors duration-300">
-          {/* Animated Background Gradients */}
-          <div className="absolute top-1/4 -left-1/4 w-full max-w-3xl h-[500px] bg-blue-600/20 rounded-full blur-[120px] -z-10 mix-blend-screen" />
-          <div className="absolute bottom-1/4 -right-1/4 w-full max-w-3xl h-[500px] bg-purple-600/20 rounded-full blur-[120px] -z-10 mix-blend-screen" />
+        <section className="relative w-full pt-32 pb-0 overflow-hidden min-h-screen flex flex-col items-center justify-start bg-background text-foreground transition-colors duration-300">
           
-          {/* Glowing Swooshes */}
-          <svg className="absolute inset-0 w-full h-full -z-10 pointer-events-none opacity-100" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 800">
-            <path d="M-100 800 C 400 400, 800 1000, 1600 200" fill="none" stroke="url(#gradient1)" strokeWidth="3" strokeDasharray="10 10" opacity="0.7" />
-            <path d="M-100 600 C 500 800, 900 100, 1600 400" fill="none" stroke="url(#gradient2)" strokeWidth="6" filter="url(#glow)" />
-            <path d="M200 900 C 600 300, 1200 800, 1800 100" fill="none" stroke="url(#gradient3)" strokeWidth="4" opacity="0.9" filter="url(#glow2)" />
-            
+          {/* Background Grid */}
+          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+CjxwYXRoIGQ9Ik0wIDBoNDB2NDBIMHoiIGZpbGw9Im5vbmUiLz4KPHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSJyZ2JhKDI1NSwyNTUsMjU1LDAuMDUpIiBzdHJva2Utd2lkdGg9IjEiLz4KPC9zdmc+')] opacity-50 z-0" style={{ backgroundSize: '60px 60px', backgroundPosition: 'center' }} />
+
+          {/* Sweeping Glowing Lines / Lights */}
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-blue-600/10 dark:bg-blue-600/20 rounded-full blur-[150px] -translate-y-1/2 translate-x-1/3 z-0 pointer-events-none" />
+          <svg className="absolute top-0 left-0 w-full h-full pointer-events-none z-0 opacity-80 dark:opacity-100" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 800">
+            {/* The main bright sweeping ray */}
+            <path d="M800 -100 C 1100 300, 1000 600, 1600 200" fill="none" stroke="currentColor" strokeWidth="8" filter="url(#glowStrong)" className="text-blue-200 dark:text-white opacity-80 dark:opacity-90" />
+            <path d="M750 -100 C 1050 350, 950 650, 1600 150" fill="none" stroke="#60a5fa" strokeWidth="20" filter="url(#glowStrong)" opacity="0.3 dark:0.4" />
+            <path d="M850 -100 C 1150 250, 1050 550, 1600 250" fill="none" stroke="#818cf8" strokeWidth="15" filter="url(#glowStrong)" opacity="0.2 dark:0.3" />
             <defs>
-              <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#38bdf8" />
-                <stop offset="100%" stopColor="#c084fc" />
-              </linearGradient>
-              <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#818cf8" />
-                <stop offset="50%" stopColor="#c084fc" />
-                <stop offset="100%" stopColor="#38bdf8" />
-              </linearGradient>
-              <linearGradient id="gradient3" x1="100%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#c084fc" />
-                <stop offset="100%" stopColor="#818cf8" />
-              </linearGradient>
-              <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
-                <feMerge>
-                  <feMergeNode in="blur" />
-                  <feMergeNode in="SourceGraphic" />
-                </feMerge>
-              </filter>
-              <filter id="glow2" x="-20%" y="-20%" width="140%" height="140%">
-                <feGaussianBlur stdDeviation="3" result="blur" />
+              <filter id="glowStrong" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="15" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -85,96 +66,112 @@ export default function Home() {
           </svg>
 
           {/* Floating Stars */}
-          <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-             <div className="absolute top-[20%] left-[25%] w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_12px_3px_#60a5fa] animate-pulse" />
-             <div className="absolute top-[35%] left-[55%] w-2 h-2 bg-purple-400 rounded-full shadow-[0_0_15px_4px_#c084fc] animate-pulse delay-150" />
-             <div className="absolute top-[65%] right-[25%] w-1 h-1 bg-cyan-400 rounded-full shadow-[0_0_10px_2px_#22d3ee] animate-pulse delay-300" />
-             <div className="absolute bottom-[25%] left-[35%] w-2 h-2 bg-indigo-400 rounded-full shadow-[0_0_18px_4px_#818cf8] animate-pulse delay-700" />
-             <div className="absolute top-[15%] right-[35%] w-1.5 h-1.5 bg-pink-400 rounded-full shadow-[0_0_12px_3px_#f472b6] animate-pulse delay-500" />
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+             <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 3 }} className="absolute top-[20%] left-[25%] w-1 h-1 bg-white rounded-full shadow-[0_0_8px_2px_#fff]" />
+             <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 4, delay: 1 }} className="absolute top-[35%] left-[55%] w-1.5 h-1.5 bg-blue-200 rounded-full shadow-[0_0_12px_2px_#bfdbfe]" />
+             <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 3.5, delay: 0.5 }} className="absolute top-[65%] right-[25%] w-1 h-1 bg-white rounded-full shadow-[0_0_8px_2px_#fff]" />
+             <motion.div animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 5, delay: 2 }} className="absolute bottom-[25%] left-[35%] w-1.5 h-1.5 bg-blue-400 rounded-full shadow-[0_0_12px_2px_#60a5fa]" />
           </div>
-          
-          {/* Floating Particles (CSS simulated) */}
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-soft-light -z-20 pointer-events-none" />
 
-          <div className="container px-4 md:px-6 mx-auto relative z-10 text-foreground">
-            <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
-              
-              {/* Left Column: Copy */}
-              <motion.div 
-                initial="hidden" 
-                animate="visible" 
-                variants={staggerContainer} 
-                className="space-y-8 max-w-xl mx-auto lg:mx-0 text-center lg:text-left"
-              >
-                <motion.div variants={fadeUp} className="space-y-4">
-                  <h1 className="text-5xl font-bold tracking-tight sm:text-6xl md:text-7xl lg:text-[5rem] leading-[1.05]">
-                    Automate Your <br />
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">Workflows.</span>
-                  </h1>
-                  <p className="text-muted-foreground md:text-xl leading-relaxed max-w-[500px] mx-auto lg:mx-0">
-                    AI-powered solutions to boost your productivity.
-                  </p>
-                </motion.div>
-                
-                <motion.div variants={fadeUp} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                  <Button size="lg" className="w-full sm:w-auto px-8 h-14 text-base rounded-full shadow-lg shadow-blue-500/25 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 transition-all hover:scale-105">
-                    Start Free Trial <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                  <Button size="lg" variant="outline" className="w-full sm:w-auto px-8 h-14 text-base rounded-full gap-2 border-border/50 hover:bg-muted/50 backdrop-blur-sm text-foreground bg-background/50">
-                    Book Demo
-                  </Button>
-                </motion.div>
+          {/* Main Content */}
+          <div className="relative z-10 flex flex-col items-center text-center w-full max-w-[1200px] px-4 mt-8 mb-8">
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="border border-border/50 bg-foreground/5 rounded-full px-4 py-1.5 text-xs font-medium text-foreground/80 backdrop-blur-md flex items-center gap-2 mb-6 shadow-sm dark:shadow-xl">
+              <span className="text-foreground">✨</span> New: Our AI integration just landed
+            </motion.div>
+            
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-semibold tracking-tight leading-[1.1] text-foreground mb-6 w-full max-w-4xl mx-auto">
+              Your Projects. Your Team. One <br className="hidden md:block" />
+              Powerful Dashboard.
+            </motion.h1>
+            
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-muted-foreground text-base md:text-lg max-w-[650px] mx-auto mb-8 leading-relaxed font-sans">
+              Manage tasks, collaborate in real-time, and stay on top of your team's productivity—all in one beautifully intuitive workspace.
+            </motion.p>
+            
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.3 }} className="relative z-50">
+              <Button className="bg-[#5b61f4] hover:bg-[#4f54d4] text-white rounded-full px-10 h-14 text-[17px] font-medium shadow-[0_0_20px_rgba(91,97,244,0.3)] dark:shadow-[0_0_40px_rgba(91,97,244,0.6)] border border-[#7a7ff7]/50 transition-all hover:scale-105 font-sans">
+                Try DocuFlow Free
+              </Button>
+            </motion.div>
+          </div>
 
-                {/* Stats */}
-                <motion.div variants={fadeUp} className="grid grid-cols-3 gap-4 pt-8 border-t border-border/40">
-                  <div>
-                    <div className="flex items-center justify-center lg:justify-start gap-1.5 text-foreground font-bold text-xl md:text-2xl">
-                      <span className="text-blue-500">~</span> 10K+
-                    </div>
-                    <p className="text-xs md:text-sm text-muted-foreground mt-1">Active Teams</p>
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-center lg:justify-start gap-1.5 text-foreground font-bold text-xl md:text-2xl">
-                      <Shield className="h-4 w-4 md:h-5 md:w-5 text-purple-500" /> 99.9%
-                    </div>
-                    <p className="text-xs md:text-sm text-muted-foreground mt-1">Uptime</p>
-                  </div>
-                  <div>
-                    <div className="flex items-center justify-center lg:justify-start gap-1.5 text-foreground font-bold text-xl md:text-2xl">
-                      <Zap className="h-4 w-4 md:h-5 md:w-5 text-yellow-500" /> 2.5M+
-                    </div>
-                    <p className="text-xs md:text-sm text-muted-foreground mt-1">Automations Run</p>
-                  </div>
-                </motion.div>
+          {/* Bottom Sphere / Planet */}
+          <div className="absolute bottom-[-550px] left-1/2 -translate-x-1/2 w-[1400px] h-[700px] z-0 pointer-events-none">
+            {/* Core sphere */}
+            <div className="absolute inset-0 rounded-[100%] bg-blue-500/10 dark:bg-[#1e3a8a]/40 border-t-2 border-blue-400/30 dark:border-[#60a5fa]/40 blur-[2px] shadow-[0_-50px_100px_rgba(37,99,235,0.1)] dark:shadow-[0_-50px_100px_rgba(37,99,235,0.2)]" />
+            <div className="absolute inset-10 rounded-[100%] bg-blue-600/10 dark:bg-[#2563eb]/30 border-t-2 border-blue-400/40 dark:border-[#93c5fd]/50 blur-[1px] shadow-[0_-30px_80px_rgba(59,130,246,0.2)] dark:shadow-[0_-30px_80px_rgba(59,130,246,0.4)]" />
+            <div className="absolute inset-20 rounded-[100%] bg-gradient-to-t from-transparent to-blue-400/20 dark:to-[#3b82f6]/50 blur-[8px]" />
+          </div>
 
-                {/* Brands */}
-                <motion.div variants={fadeUp} className="flex items-center justify-center lg:justify-start gap-6 pt-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                  <div className="font-bold text-xl font-serif">airbnb</div>
-                  <div className="font-bold text-xl flex items-center gap-1"><span className="w-4 h-4 rounded-full bg-foreground inline-block"></span> Spotify</div>
-                  <div className="font-bold text-xl">coinbase</div>
-                  <div className="font-bold text-xl"># slack</div>
-                </motion.div>
-              </motion.div>
-
-              {/* Right Column: Floating Dashboard */}
-              <div className="relative lg:-mr-12 xl:-mr-24 hidden md:block" style={{ perspective: "2000px" }}>
-                <motion.div 
-                  initial={{ opacity: 0, x: 80, y: 20, rotateY: -30, rotateX: 15, rotateZ: -10 }}
-                  animate={{ opacity: 1, x: 0, y: 0, rotateY: -20, rotateX: 10, rotateZ: -5 }}
-                  transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {/* Glowing edge effect */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 via-blue-500/10 to-purple-500/20 rounded-2xl blur-2xl transform translate-z-[-50px]" />
-                  <div className="absolute -inset-0.5 bg-gradient-to-tr from-cyan-500 via-blue-500 to-purple-500 rounded-2xl opacity-40 blur-[2px] transform translate-z-[-10px]" />
-                  
-                  {/* Dashboard Container */}
-                  <div className="relative rounded-2xl overflow-hidden border border-border/50 bg-background/95 backdrop-blur-xl shadow-2xl transform-gpu hover:scale-[1.02] transition-all duration-500 translate-z-[20px]">
-                    <HeroDashboardMockup />
-                  </div>
-                </motion.div>
+          {/* Floating Glass Cards */}
+          <div className="relative w-full max-w-[1050px] mx-auto flex justify-center items-end gap-5 z-20 h-[220px] px-4 pointer-events-none mt-auto pb-4">
+            
+            {/* Left Card */}
+            <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} className="w-64 h-44 bg-background/60 backdrop-blur-2xl border border-border/50 rounded-3xl p-5 shadow-xl dark:shadow-2xl relative overflow-hidden flex flex-col justify-between mb-4 pointer-events-auto hover:bg-background/80 transition-colors hidden md:flex">
+              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 dark:opacity-10 mix-blend-soft-light" />
+              <div className="relative z-10 w-full h-full flex flex-col justify-center items-center pb-2">
+                <svg width="120" height="60" viewBox="0 0 120 60" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-foreground opacity-90">
+                  <path d="M20 40 C 30 20, 35 15, 40 35 C 45 55, 50 40, 55 35 C 60 30, 70 40, 75 35 C 80 30, 85 30, 95 35" />
+                  <path d="M35 15 L 30 50" />
+                  <line x1="30" y1="50" x2="90" y2="50" />
+                  <line x1="45" y1="58" x2="75" y2="58" />
+                </svg>
               </div>
-            </div>
+              <div className="relative z-10 mt-auto flex justify-between w-full text-[11px] text-muted-foreground font-medium tracking-wide">
+                <span>Joint Board</span>
+                <span className="text-[#5b61f4]">Edited Now</span>
+              </div>
+            </motion.div>
+
+            {/* Middle Card 1 (New Brief) */}
+            <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }} className="w-36 h-36 bg-background/80 backdrop-blur-3xl border border-border/50 rounded-[28px] flex flex-col items-center justify-center gap-3 mb-10 shadow-xl dark:shadow-2xl pointer-events-auto hover:bg-background transition-colors relative overflow-hidden hidden sm:flex">
+               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 dark:opacity-10 mix-blend-soft-light" />
+               <FileText className="w-8 h-8 text-foreground relative z-10" />
+               <span className="text-sm font-medium text-foreground relative z-10 flex items-center gap-1">New Brief <div className="w-1.5 h-1.5 rounded-full bg-red-500" /></span>
+            </motion.div>
+
+            {/* Middle Card 2 (Meeting) */}
+            <motion.div animate={{ y: [0, -12, 0] }} transition={{ repeat: Infinity, duration: 5, ease: "easeInOut", delay: 2 }} className="w-56 h-32 bg-muted/60 backdrop-blur-3xl border border-border/50 rounded-3xl flex flex-col items-center justify-center gap-3 mb-20 shadow-xl dark:shadow-2xl pointer-events-auto relative overflow-hidden hidden sm:flex">
+               <div className="absolute inset-0 bg-gradient-to-b from-foreground/5 to-transparent" />
+               <div className="absolute top-3 right-3 text-muted-foreground text-xl leading-none tracking-widest">...</div>
+               <div className="bg-foreground/10 p-2 rounded-xl mb-1 backdrop-blur-md">
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" className="text-foreground opacity-90">
+                    <path d="M4 6h10c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2zm12 2l4-4v12l-4-4V8z" />
+                 </svg>
+               </div>
+               <span className="font-medium text-foreground text-[15px]">Meeting on 1:00 PM</span>
+            </motion.div>
+
+            {/* Right Card: UI Mockup */}
+            <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 3 }} className="w-80 h-52 bg-background/60 backdrop-blur-2xl border border-border/50 rounded-3xl p-5 shadow-xl dark:shadow-2xl relative overflow-hidden pointer-events-auto flex flex-col mb-2 hidden lg:flex">
+               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 dark:opacity-10 mix-blend-soft-light" />
+               <div className="relative z-10 flex-1 w-full bg-muted/50 rounded-xl border border-border/30 p-3 flex flex-col gap-3">
+                  <div className="flex gap-2 w-full">
+                    <div className="w-24 h-16 bg-muted rounded-lg relative overflow-hidden">
+                       <div className="absolute -left-1 top-2 bg-orange-500/90 text-[8px] text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="w-1 h-1 bg-white rounded-full"></span> Sean
+                       </div>
+                    </div>
+                    <div className="flex-1 flex flex-col gap-2">
+                       <div className="w-full h-4 bg-muted rounded" />
+                       <div className="w-3/4 h-3 bg-muted rounded" />
+                       <div className="w-1/2 h-3 bg-muted rounded" />
+                    </div>
+                  </div>
+                  <div className="flex gap-2 w-full h-12 mt-auto">
+                    <div className="flex-1 bg-muted rounded-lg" />
+                    <div className="w-20 bg-muted rounded-lg relative flex items-center justify-center">
+                       <div className="absolute right-[-5px] top-2 bg-[#5b61f4] text-[8px] text-white px-2 py-0.5 rounded-full flex items-center gap-1">
+                          <span className="w-1 h-1 bg-white rounded-full"></span> Me
+                       </div>
+                    </div>
+                  </div>
+               </div>
+               <div className="relative z-10 mt-4 flex justify-between w-full text-xs text-muted-foreground font-medium">
+                  <span>UI/UX</span>
+                  <span className="text-muted-foreground/70">Edited Now</span>
+               </div>
+            </motion.div>
           </div>
         </section>
 
