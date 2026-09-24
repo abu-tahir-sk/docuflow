@@ -83,17 +83,16 @@ export async function POST(req: Request) {
       }
     })
 
-    // Simulate sending email
-    console.log(`
-    =========================================
-    📧 OTP Verification Email (Simulated)
-    To: ${email}
-    OTP Code: ${otp}
-    =========================================
-    `)
+    // Send actual email using Resend
+    await sendVerificationEmail(email, otp)
 
     return NextResponse.json(
-      { requireOtp: true, message: "OTP sent to email" },
+      { 
+        requireOtp: true, 
+        message: "OTP sent to email",
+        // FOR DEVELOPMENT ONLY: send OTP in response so you can see it in the browser
+        ...(process.env.NODE_ENV !== "production" ? { otp } : {})
+      },
       { status: 201 }
     )
   } catch (error) {

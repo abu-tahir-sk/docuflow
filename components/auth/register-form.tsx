@@ -88,7 +88,16 @@ export function RegisterForm() {
         setRegisteredEmail(data.email)
         setRegisteredPassword(data.password)
         setIsOtpMode(true)
-        toast.success("OTP sent to your email (check console)")
+        
+        if (responseData.otp) {
+          console.log("=========================================")
+          console.log(`DEV MODE OTP: ${responseData.otp}`)
+          console.log("=========================================")
+          toast.success(`OTP for dev testing: ${responseData.otp}`)
+        } else {
+          toast.success("OTP sent to your email (check console)")
+        }
+        
         setIsLoading(false)
         return
       }
