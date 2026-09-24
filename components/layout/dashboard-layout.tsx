@@ -18,13 +18,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { signOut } from "next-auth/react"
+import { signOut, useSession } from "next-auth/react"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 interface DashboardLayoutProps {
   children: React.ReactNode
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const { data: session } = useSession()
+
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/20">
       <div className="flex flex-1 overflow-hidden">
@@ -95,14 +98,23 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <DropdownMenu>
               <DropdownMenuTrigger
                 render={
-                  <Button variant="secondary" size="icon" className="rounded-full" />
+                  <Button variant="secondary" size="icon" className="rounded-full overflow-hidden" />
                 }
               >
-                <User className="h-5 w-5" />
+                {session?.user?.image ? (
+                  <Avatar className="h-8 w-8">
+                    <AvatarImage src={session.user.image} alt={session.user.name || "User"} />
+                    <AvatarFallback>{session.user.name?.[0]?.toUpperCase() || "U"}</AvatarFallback>
+                  </Avatar>
+                ) : (
+                  <User className="h-5 w-5" />
+                )}
                 <span className="sr-only">Toggle user menu</span>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>
+                  {session?.user?.name ? session.user.name : "My Account"}
+                </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Settings</DropdownMenuItem>
                 <DropdownMenuItem>Support</DropdownMenuItem>

@@ -24,6 +24,12 @@ export async function POST(req: Request) {
     const hashedPassword = await bcrypt.hash(password, 10)
 
     if (existingUser) {
+      if (!existingUser.passwordHash) {
+        return NextResponse.json(
+          { message: "This email is registered with Google. Please log in using Google." },
+          { status: 409 }
+        )
+      }
       if (existingUser.emailVerified) {
         return NextResponse.json(
           { message: "User with this email already exists" },
