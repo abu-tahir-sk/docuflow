@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
+import { sendVerificationEmail } from "@/lib/email"
 
 export async function POST(req: Request) {
   try {
@@ -47,6 +48,22 @@ export async function POST(req: Request) {
           passwordHash: hashedPassword,
         },
       })
+    }
+
+    // Prevent spam by checking if an OTP was requested less than 1 minute ago
+    const existingToken = await prisma.verificationToken.findFirst({
+      where: { identifier: email }
+    })
+    
+    if (existingToken) {
+      const timeRemaining = existingToken.expires.getTime() - Date.now()
+      // If token expires in more than 9 minutes (created < 1 min ago)
+      if (timeRemaining > 9 * 60 * 1000) {
+        return NextResponse.json(
+          { message: "Please wait 1 minute before requesting another OTP." },
+          { status: 429 } // Too Many Requests
+        )
+      }
     }
 
     // Generate 6-digit OTP

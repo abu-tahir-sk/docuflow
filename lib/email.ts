@@ -1,12 +1,18 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_APP_PASSWORD,
+  },
+});
 
 export async function sendVerificationEmail(email: string, otp: string) {
   try {
-    const { data, error } = await resend.emails.send({
-      from: 'DocuFlow <onboarding@resend.dev>', // You should update this to your verified domain later
-      to: [email],
+    const mailOptions = {
+      from: `"DocuFlow" <${process.env.EMAIL_USER}>`,
+      to: email,
       subject: 'Verify your DocuFlow account',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
@@ -23,16 +29,12 @@ export async function sendVerificationEmail(email: string, otp: string) {
           </p>
         </div>
       `,
-    });
+    };
 
-    if (error) {
-      console.error('Error sending email via Resend:', error);
-      return { success: false, error };
-    }
-
-    return { success: true, data };
+    const info = await transporter.sendMail(mailOptions);
+    return { success: true, data: info };
   } catch (error) {
-    console.error('Exception while sending email:', error);
+    console.error('Exception while sending email via Nodemailer:', error);
     return { success: false, error };
   }
 }
