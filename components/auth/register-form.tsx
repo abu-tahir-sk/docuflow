@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import Link from "next/link"
 import { toast } from "sonner"
-import { Loader2 } from "lucide-react"
+import { Loader2, Upload } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -45,6 +45,22 @@ export function RegisterForm() {
   const [otp, setOtp] = useState("")
   const [registeredEmail, setRegisteredEmail] = useState("")
   const [registeredPassword, setRegisteredPassword] = useState("")
+  const [photoBase64, setPhotoBase64] = useState<string | null>(null)
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      if (file.size > 2 * 1024 * 1024) {
+        toast.error("Image must be less than 2MB")
+        return
+      }
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setPhotoBase64(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const {
     register,
@@ -74,6 +90,7 @@ export function RegisterForm() {
           name: data.name,
           email: data.email,
           password: data.password,
+          image: photoBase64,
         }),
       })
 
@@ -255,6 +272,27 @@ export function RegisterForm() {
           {errors.name && (
             <p className="text-sm text-red-500">{errors.name.message}</p>
           )}
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="photo">Profile Photo (Optional)</Label>
+          <div className="flex items-center gap-4">
+            {photoBase64 ? (
+              <img src={photoBase64} alt="Profile preview" className="w-12 h-12 rounded-full object-cover border" />
+            ) : (
+              <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center border">
+                <Upload className="w-4 h-4 text-muted-foreground" />
+              </div>
+            )}
+            <Input
+              id="photo"
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              disabled={isLoading}
+              className="flex-1 cursor-pointer"
+            />
+          </div>
         </div>
 
         <div className="space-y-2">

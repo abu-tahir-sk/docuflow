@@ -2,16 +2,35 @@ import { NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
 import { prisma } from "@/lib/prisma"
 import { sendVerificationEmail } from "@/lib/email"
+import { v2 as cloudinary } from "cloudinary"
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
 
 export async function POST(req: Request) {
   try {
-    const { name, email, password } = await req.json()
+    const { name, email, password, image } = await req.json()
 
     if (!name || !email || !password) {
       return NextResponse.json(
         { message: "Missing required fields" },
         { status: 400 }
       )
+    }
+
+    let imageUrl = null
+    if (image) {
+      try {
+        const uploadResponse = await cloudinary.uploader.upload(image, {
+          folder: "docuflow_avatars",
+        })
+        imageUrl = uploadResponse.secure_url
+      } catch (uploadError) {
+        console.error("Cloudinary upload error:", uploadError)
+      }
     }
 
     // Check if user already exists
@@ -42,6 +61,7 @@ export async function POST(req: Request) {
           data: {
             name,
             passwordHash: hashedPassword,
+            ...(imageUrl ? { image: imageUrl } : {}),
           },
         })
       }
@@ -52,6 +72,7 @@ export async function POST(req: Request) {
           name,
           email,
           passwordHash: hashedPassword,
+          ...(imageUrl ? { image: imageUrl } : {}),
         },
       })
     }

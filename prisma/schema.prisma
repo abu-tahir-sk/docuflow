@@ -43,6 +43,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  companies     Company[]
   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -83,3 +84,142 @@ model TwoFactorConfirmation {
   @@unique([userId])
 }
 
+// -----------------------------------------------------------------------------
+// DOCUFLOW INVOICING MODULE SCHEMA
+// -----------------------------------------------------------------------------
+
+model Company {
+  id                String    @id @default(cuid())
+  name              String
+  logoUrl           String?
+  address           String?   @db.Text
+  email             String?
+  phone             String?
+  website           String?
+  taxId             String?   // GSTIN / VAT / EIN
+  registrationNumber String?
+  
+  // Payment info defaults
+  paymentMethod     String?
+  bankName          String?
+  accountName       String?
+  accountNumber     String?
+  ifsc              String?
+  upiId             String?
+  paymentInstructions String? @db.Text
+  
+  // Default terms & notes
+  defaultNotes      String?   @db.Text
+  defaultTerms      String?   @db.Text
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  invoices          Invoice[]
+  clients           Client[]
+  
+  // A company is owned/managed by a user (simplified for now, can add team roles later)
+  ownerId           String
+  owner             User      @relation(fields: [ownerId], references: [id])
+}
+
+model Client {
+  id                String    @id @default(cuid())
+  companyId         String
+  company           Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  
+  name              String
+  clientCompany     String?
+  email             String?
+  phone             String?
+  address           String?   @db.Text
+  taxId             String?
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  invoices          Invoice[]
+}
+
+model Invoice {
+  id                String    @id @default(cuid())
+  token             String?   @default(cuid())
+  companyId         String
+  company           Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  clientId          String
+  client            Client    @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  
+  invoiceNumber     String
+  issueDate         DateTime
+  dueDate           DateTime
+  currency          String    @default("INR")
+  status            String    @default("DRAFT") // DRAFT, SENT, VIEWED, PARTIALLY_PAID, PAID, OVERDUE, CANCELLED, REFUNDED
+  paymentTerms      String?   // e.g., 'Net 15'
+  
+  // Financials
+  subtotal          Float     @default(0)
+  discountType      String?   // 'PERCENTAGE' or 'FIXED'
+  discountValue     Float     @default(0)
+  taxAmount         Float     @default(0)
+  total             Float     @default(0)
+  amountPaid        Float     @default(0)
+  
+  // Config & Metadata
+  notes             String?   @db.Text
+  terms             String?   @db.Text
+  template          String    @default("minimal")
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  items             InvoiceItem[]
+  payments          Payment[]
+  versions          DocumentVersion[]
+
+  @@unique([companyId, invoiceNumber])
+  @@index([token])
+}
+
+model InvoiceItem {
+  id                String    @id @default(cuid())
+  invoiceId         String
+  invoice           Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  description       String    @db.Text
+  quantity          Float     @default(1)
+  unit              String    @default("Piece")
+  unitPrice         Float     @default(0)
+  discountType      String?
+  discountValue     Float     @default(0)
+  taxRate           Float     @default(0)
+  amount            Float     @default(0)
+  
+  sortOrder         Int       @default(0)
+}
+
+model Payment {
+  id                String    @id @default(cuid())
+  invoiceId         String
+  invoice           Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  amount            Float
+  method            String
+  status            String    @default("COMPLETED")
+  transactionId     String?
+  paidAt            DateTime  @default(now())
+  notes             String?   @db.Text
+  
+  createdAt         DateTime  @default(now())
+}
+
+model DocumentVersion {
+  id                String    @id @default(cuid())
+  invoiceId         String
+  invoice           Invoice   @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  
+  versionNumber     Int
+  changesSummary    String?   @db.Text
+  snapshotData      String    @db.Text // JSON string of the invoice data at this version
+  
+  createdAt         DateTime  @default(now())
+}

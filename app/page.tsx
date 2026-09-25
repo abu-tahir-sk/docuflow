@@ -80,12 +80,12 @@ export default function Home() {
             </motion.div>
             
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }} className="text-5xl md:text-7xl lg:text-[5.5rem] font-sans font-semibold tracking-tight leading-[1.1] text-foreground mb-6 w-full max-w-4xl mx-auto">
-              Your Projects. Your Team. One <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500">Powerful Dashboard.</span>
+              All Your Business Documents, <br className="hidden md:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-500">In One Place.</span>
             </motion.h1>
             
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-muted-foreground text-base md:text-lg max-w-[650px] mx-auto mb-8 leading-relaxed font-sans">
-              Manage tasks, collaborate in real-time, and stay on top of your team's productivity—all in one beautifully intuitive workspace.
+              Create, manage, and track invoices, quotations, agreements, clients, and payments from one powerful workspace.
             </motion.p>
             
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: 0.3 }} className="relative z-50">
