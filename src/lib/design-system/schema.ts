@@ -1,0 +1,166 @@
+import { z } from "zod";
+
+export const designSettingsSchema = z.object({
+  watermark: z.object({
+    enabled: z.boolean().default(false),
+    type: z.enum(["TEXT", "LOGO"]).default("TEXT"),
+    text: z.object({
+      content: z.string().default("CONFIDENTIAL"),
+      fontFamily: z.string().default("Inter, sans-serif"),
+      fontSize: z.number().default(48),
+      fontWeight: z.union([z.string(), z.number()]).default(700),
+      color: z.string().default("#000000"),
+      opacity: z.number().default(0.1),
+      rotation: z.number().default(-45),
+      position: z.string().default("CENTER"),
+      letterSpacing: z.number().default(0),
+      horizontalGap: z.number().default(70),
+      verticalGap: z.number().default(55),
+      tileScale: z.number().default(1),
+      offsetX: z.number().default(0),
+      offsetY: z.number().default(0),
+    }),
+    logo: z.object({
+      size: z.number().default(100),
+      opacity: z.number().default(0.1),
+      rotation: z.number().default(0),
+      position: z.string().default("CENTER"),
+      horizontalGap: z.number().default(60),
+      verticalGap: z.number().default(50),
+      tileScale: z.number().default(1),
+      offsetX: z.number().default(0),
+      offsetY: z.number().default(0),
+    }),
+  }),
+  colors: z.object({
+    primary: z.string().default("#0f172a"),
+    secondary: z.string().default("#64748b"),
+    invoiceTitle: z.string().default("#0f172a"),
+    tableHeader: z.string().default("#f1f5f9"),
+    tableText: z.string().default("#334155"),
+    totalAmount: z.string().default("#0f172a"),
+    footer: z.string().default("#64748b"),
+  }),
+  typography: z.object({
+    fontFamily: z.string().default("Inter, sans-serif"),
+    sizes: z.object({
+      invoiceTitle: z.number().min(16).max(72).default(28),
+      sectionHeading: z.number().min(10).max(32).default(12),
+      bodyText: z.number().min(8).max(24).default(10),
+      tableText: z.number().min(8).max(24).default(11),
+      totalAmount: z.number().min(12).max(48).default(18),
+      footerText: z.number().min(6).max(20).default(10),
+    }),
+  }),
+  layout: z.object({
+    logoPosition: z.enum(["LEFT", "CENTER", "RIGHT"]).default("LEFT"),
+    companyInfoAlignment: z.enum(["LEFT", "CENTER", "RIGHT"]).default("LEFT"),
+    clientInfoLayout: z.enum(["STANDARD", "COMPACT"]).default("STANDARD"),
+    invoiceMetadata: z.enum(["STANDARD", "COMPACT"]).default("STANDARD"),
+    tableDensity: z.enum(["COMPACT", "STANDARD", "SPACIOUS"]).default("STANDARD"),
+    spacing: z.object({
+      header: z.number().default(8),
+      section: z.number().default(8),
+      footer: z.number().default(8),
+      pageMargins: z.number().default(40),
+    }),
+  }),
+  visibility: z.object({
+    logo: z.boolean().default(true),
+    signature: z.boolean().default(true),
+    seal: z.boolean().default(false),
+    bankDetails: z.boolean().default(true),
+    paymentInfo: z.boolean().default(true),
+    upiQr: z.boolean().default(false),
+    gstin: z.boolean().default(true),
+    pan: z.boolean().default(true),
+    hsnSac: z.boolean().default(false),
+    shippingAddress: z.boolean().default(false),
+    billingAddress: z.boolean().default(true),
+    notes: z.boolean().default(true),
+    terms: z.boolean().default(true),
+    footer: z.boolean().default(true),
+    paymentInstructions: z.boolean().default(true),
+  }),
+});
+
+export type DesignSettings = z.infer<typeof designSettingsSchema>;
+
+export const defaultDesignSettings: DesignSettings = {
+  watermark: {
+    enabled: false,
+    type: "TEXT",
+    text: {
+      content: "CONFIDENTIAL",
+      fontFamily: "Inter, sans-serif",
+      fontSize: 48,
+      fontWeight: 700,
+      color: "#000000",
+      opacity: 0.1,
+      rotation: -45,
+      position: "CENTER",
+      letterSpacing: 0,
+      horizontalGap: 70,
+      verticalGap: 55,
+      tileScale: 1,
+      offsetX: 0,
+      offsetY: 0
+    },
+    logo: { 
+      size: 100, 
+      opacity: 0.1, 
+      rotation: 0, 
+      position: "CENTER",
+      horizontalGap: 60,
+      verticalGap: 50,
+      tileScale: 1,
+      offsetX: 0,
+      offsetY: 0
+    }
+  },
+  colors: {
+    primary: "#0f172a",
+    secondary: "#64748b",
+    invoiceTitle: "#0f172a",
+    tableHeader: "#f1f5f9",
+    tableText: "#334155",
+    totalAmount: "#0f172a",
+    footer: "#64748b"
+  },
+  typography: {
+    fontFamily: "Inter, sans-serif",
+    sizes: {
+      invoiceTitle: 28,
+      sectionHeading: 12,
+      bodyText: 10,
+      tableText: 11,
+      totalAmount: 18,
+      footerText: 10
+    }
+  },
+  layout: {
+    logoPosition: "LEFT",
+    companyInfoAlignment: "LEFT",
+    clientInfoLayout: "STANDARD",
+    invoiceMetadata: "STANDARD",
+    tableDensity: "STANDARD",
+    spacing: { header: 8, section: 8, footer: 8, pageMargins: 40 }
+  },
+  visibility: {
+    logo: true,
+    signature: true,
+    seal: false,
+    bankDetails: true,
+    paymentInfo: true,
+    upiQr: false,
+    gstin: true,
+    pan: true,
+    hsnSac: false,
+    shippingAddress: false,
+    billingAddress: true,
+    notes: true,
+    terms: true,
+    footer: true,
+    paymentInstructions: true
+  }
+};

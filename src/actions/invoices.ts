@@ -89,6 +89,7 @@ export async function createOrUpdateInvoice(data: any) {
           notes: parsedData.notes,
           terms: parsedData.terms,
           template: parsedData.template,
+          designSettings: parsedData.designSettings ? JSON.parse(JSON.stringify(parsedData.designSettings)) : undefined,
           
           discountType: parsedData.discountType,
           discountValue: parsedData.discountValue,
@@ -132,6 +133,7 @@ export async function createOrUpdateInvoice(data: any) {
           notes: parsedData.notes,
           terms: parsedData.terms,
           template: parsedData.template,
+          designSettings: parsedData.designSettings ? JSON.parse(JSON.stringify(parsedData.designSettings)) : undefined,
           
           discountType: parsedData.discountType,
           discountValue: parsedData.discountValue,
@@ -244,6 +246,9 @@ export async function getInvoiceByToken(token: string) {
             paymentInstructions: true,
             defaultNotes: true,
             defaultTerms: true,
+            signatureUrl: true,
+            sealUrl: true,
+            designSettings: true,
           }
         }
       }
@@ -309,6 +314,7 @@ export async function duplicateInvoice(id: string) {
         notes: original.notes,
         terms: original.terms,
         template: original.template,
+        designSettings: original.designSettings ? JSON.parse(JSON.stringify(original.designSettings)) : undefined,
         discountType: original.discountType,
         discountValue: original.discountValue,
         subtotal: original.subtotal,

@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { designSettingsSchema } from "../design-system/schema"
 
 export const companySchema = z.object({
   name: z.string().min(1, "Company name is required"),
@@ -20,6 +21,10 @@ export const companySchema = z.object({
   
   defaultNotes: z.string().optional().nullable(),
   defaultTerms: z.string().optional().nullable(),
+  
+  signatureUrl: z.string().optional().nullable(),
+  sealUrl: z.string().optional().nullable(),
+  designSettings: designSettingsSchema.optional().nullable(),
 })
 
 export type CompanyFormValues = z.infer<typeof companySchema>

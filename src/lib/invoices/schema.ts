@@ -1,4 +1,5 @@
 import { z } from "zod"
+import { designSettingsSchema } from "../design-system/schema"
 
 export const invoiceItemSchema = z.object({
   id: z.string().optional(),
@@ -13,7 +14,7 @@ export const invoiceItemSchema = z.object({
 
 export const invoiceSchema = z.object({
   id: z.string().optional(),
-  clientId: z.string({ required_error: "Client is required", invalid_type_error: "Client is required" }).min(1, "Client is required"),
+  clientId: z.string().min(1, "Client is required"),
   companyId: z.string().optional(), // Injected by server usually
   
   invoiceNumber: z.string().optional(), // Auto-generated if not provided
@@ -29,6 +30,7 @@ export const invoiceSchema = z.object({
   notes: z.string().optional(),
   terms: z.string().optional(),
   template: z.string().default("minimal"),
+  designSettings: designSettingsSchema.optional().nullable(),
   
   items: z.array(invoiceItemSchema).min(1, "At least one item is required"),
 })

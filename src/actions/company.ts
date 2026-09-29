@@ -15,7 +15,10 @@ export async function updateCompanySettings(data: any) {
     // Update the company
     const updatedCompany = await prisma.company.update({
       where: { id: company.id },
-      data: parsedData,
+      data: {
+        ...parsedData,
+        designSettings: parsedData.designSettings ? JSON.parse(JSON.stringify(parsedData.designSettings)) : undefined
+      },
     })
     
     revalidatePath("/dashboard")

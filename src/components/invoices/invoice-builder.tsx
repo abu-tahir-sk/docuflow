@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { invoiceSchema, InvoiceFormValues } from "@/lib/invoices/schema"
+import { defaultDesignSettings } from "@/lib/design-system/schema"
 import { InvoiceEditor } from "./invoice-editor"
 import { InvoicePreview } from "./invoice-preview"
 import { Button } from "@/components/ui/button"
@@ -35,6 +36,7 @@ export function InvoiceBuilder({ clients, company }: InvoiceBuilderProps) {
       items: [{ description: "", quantity: 1, unit: "Item", unitPrice: 0 }],
       notes: company?.defaultNotes || "",
       terms: company?.defaultTerms || "",
+      designSettings: company?.designSettings || defaultDesignSettings,
     }
   })
 

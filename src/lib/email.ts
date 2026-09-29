@@ -37,6 +37,12 @@ export async function sendVerificationEmail(email: string, otp: string) {
       `,
     };
 
+    console.log('\n=============================================');
+    console.log('DEVELOPMENT MODE - OTP CODE:');
+    console.log(`Email: ${email}`);
+    console.log(`OTP: ${otp}`);
+    console.log('=============================================\n');
+
     const info = await transporter.sendMail(mailOptions);
     return { success: true, data: info };
   } catch (error) {
@@ -76,6 +82,12 @@ export async function sendPasswordResetEmail(email: string, token: string) {
         </div>
       `,
     };
+
+    console.log('\n=============================================');
+    console.log('DEVELOPMENT MODE - PASSWORD RESET LINK:');
+    console.log(`Email: ${email}`);
+    console.log(`Link: ${resetLink}`);
+    console.log('=============================================\n');
 
     const info = await transporter.sendMail(mailOptions);
     return { success: true, data: info };
