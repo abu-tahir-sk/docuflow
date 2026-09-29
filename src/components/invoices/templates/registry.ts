@@ -1,6 +1,7 @@
 import { ClassicTemplate } from "./ClassicTemplate";
 import { ModernTemplate } from "./ModernTemplate";
 import { MinimalTemplate } from "./MinimalTemplate";
+import { MinimalPremiumTemplate } from "./MinimalPremiumTemplate";
 // Import remaining 12 templates...
 
 export const INVOICE_TEMPLATES = [
@@ -23,6 +24,13 @@ export const INVOICE_TEMPLATES = [
         name: "Minimal",
         description: "Clean whitespace with strong typography",
         component: MinimalTemplate,
+        thumbnail: "/templates/minimal-thumb.png"
+    },
+    {
+        id: "minimal-premium",
+        name: "Minimal Premium",
+        description: "Extremely minimalist and premium layout like Stripe/Vercel",
+        component: MinimalPremiumTemplate,
         thumbnail: "/templates/minimal-thumb.png"
     },
     // Register remaining templates (Corporate, Executive, Elegant, etc.)
