@@ -28,7 +28,7 @@ import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { updateInvoiceStatus, deleteInvoice, duplicateInvoice } from "@/actions/invoices"
 import { toast } from "sonner"
-import { InvoicePreview } from "@/components/invoices/invoice-preview"
+import { StaticInvoicePreview } from "@/components/invoices/invoice-preview"
 
 interface InvoiceDetailsClientProps {
   initialInvoice: any
@@ -114,8 +114,7 @@ export function InvoiceDetailsClient({ initialInvoice, company, clients }: Invoi
               <MoreVertical className="h-4 w-4" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => router.push(`/dashboard/invoices/new?duplicate=${invoice.id}`)}>
-                {/* Normally we'd pass data to InvoiceBuilder for editing, but for now Edit can just be a placeholder or disabled if paid */}
+              <DropdownMenuItem onClick={() => router.push(`/dashboard/invoices/${invoice.id}/edit`)}>
                 <Edit className="mr-2 h-4 w-4" /> Edit
               </DropdownMenuItem>
               <DropdownMenuItem onClick={handleDuplicate}>
@@ -219,7 +218,7 @@ export function InvoiceDetailsClient({ initialInvoice, company, clients }: Invoi
       {/* Preview Panel */}
       <div className="w-full md:w-2/3 lg:w-3/4 flex-col overflow-y-auto bg-muted flex">
         <div className="p-4 flex justify-center min-h-full">
-          <InvoicePreview data={invoice} company={company} clients={clients} />
+          <StaticInvoicePreview data={invoice} company={company} clients={clients} />
         </div>
       </div>
       

@@ -42,7 +42,7 @@ export function InvoiceEditor({ form, clients, onAddClient }: InvoiceEditorProps
   return (
     <Form {...form}>
       <form className="space-y-6">
-        <Accordion type="multiple" defaultValue={["client", "items"]} className="w-full space-y-4">
+        <Accordion defaultValue={["client", "items"]} className="w-full space-y-4">
           
           {/* CLIENT SECTION */}
           <AccordionItem value="client" className="bg-card border rounded-lg px-4 border-b-0 shadow-sm">
@@ -131,12 +131,12 @@ export function InvoiceEditor({ form, clients, onAddClient }: InvoiceEditorProps
                         <FormLabel className="text-xs text-muted-foreground">Issue Date</FormLabel>
                         <Popover>
                           <FormControl>
-                            <PopoverTrigger asChild>
+                            <PopoverTrigger render={
                               <Button variant="outline" className={cn("w-full pl-3 text-left font-normal h-10", !field.value && "text-muted-foreground")}>
                                 {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                               </Button>
-                            </PopoverTrigger>
+                            } />
                           </FormControl>
                           <PopoverContent className="w-auto p-0" align="start">
                             <Calendar mode="single" selected={field.value} onSelect={field.onChange} />
@@ -153,12 +153,12 @@ export function InvoiceEditor({ form, clients, onAddClient }: InvoiceEditorProps
                         <FormLabel className="text-xs text-muted-foreground">Due Date</FormLabel>
                         <Popover>
                           <FormControl>
-                            <PopoverTrigger asChild>
+                            <PopoverTrigger render={
                               <Button variant="outline" className={cn("w-full pl-3 text-left font-normal h-10", !field.value && "text-muted-foreground")}>
                                 {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                 <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                               </Button>
-                            </PopoverTrigger>
+                            } />
                           </FormControl>
                           <PopoverContent className="w-auto p-0" align="start">
                             <Calendar mode="single" selected={field.value} onSelect={field.onChange} />

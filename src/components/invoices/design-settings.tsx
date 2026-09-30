@@ -509,8 +509,52 @@ import { Slider } from "@/components/ui/slider"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils"
 
-// নতুন টেমপ্লেট গ্যালারি কম্পোনেন্ট ইমপোর্ট করা হলো
 import { TemplateGallery } from "./TemplateGallery"
+import React, { useState, useEffect } from "react"
+
+function DebouncedInput({ field, ...props }: any) {
+  const [localValue, setLocalValue] = useState(field.value || "")
+  
+  useEffect(() => {
+    setLocalValue(field.value || "")
+  }, [field.value])
+  
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      if (localValue !== field.value && localValue !== undefined) {
+        field.onChange(localValue)
+      }
+    }, 400)
+    return () => clearTimeout(handler)
+  }, [localValue, field])
+
+  return (
+    <Input
+      {...props}
+      value={localValue}
+      onChange={(e) => setLocalValue(e.target.value)}
+    />
+  )
+}
+
+function DebouncedSlider({ value, onChange, min, max, step }: any) {
+  const [localValue, setLocalValue] = useState(value)
+  
+  useEffect(() => {
+    setLocalValue(value)
+  }, [value])
+
+  return (
+    <Slider
+      min={min}
+      max={max}
+      step={step}
+      value={[localValue]}
+      onValueChange={(v) => setLocalValue(v[0])}
+      onValueCommit={(v) => onChange(v[0])}
+    />
+  )
+}
 
 const PRESET_COLORS = [
   { name: "Blue", hex: "#2563EB" },
@@ -790,12 +834,12 @@ export function DesignSettingsForm() {
                         <span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || min}px</span>
                       </div>
                       <FormControl>
-                        <Slider
+                        <DebouncedSlider
                           min={min}
                           max={max}
                           step={1}
-                          value={[field.value || min]}
-                          onValueChange={(v) => field.onChange((v as number[])[0])}
+                          value={field.value || min}
+                          onChange={field.onChange}
                         />
                       </FormControl>
                     </FormItem>
@@ -867,7 +911,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="text-xs">Text Content</FormLabel>
-                          <FormControl><Input {...field} className="h-8" /></FormControl>
+                          <FormControl><DebouncedInput field={field} className="h-8" /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -878,8 +922,8 @@ export function DesignSettingsForm() {
                         <FormItem className="flex items-center gap-4">
                           <FormLabel className="w-1/3 text-xs">Color</FormLabel>
                           <div className="flex flex-1 gap-2">
-                            <FormControl><Input type="text" {...field} className="h-8 uppercase text-xs" /></FormControl>
-                            <FormControl><Input type="color" {...field} className="h-8 w-12 p-1 cursor-pointer" /></FormControl>
+                            <FormControl><DebouncedInput field={field} type="text" className="h-8 uppercase text-xs" /></FormControl>
+                            <FormControl><DebouncedInput field={field} type="color" className="h-8 w-12 p-1 cursor-pointer" /></FormControl>
                           </div>
                         </FormItem>
                       )}
@@ -890,7 +934,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Font Size</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 48}px</span></div>
-                          <FormControl><Slider min={10} max={200} step={1} value={[field.value || 48]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={10} max={200} step={1} value={field.value || 48} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -900,7 +944,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Rotation</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || -45}°</span></div>
-                          <FormControl><Slider min={-180} max={180} step={1} value={[field.value || -45]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={-180} max={180} step={1} value={field.value || -45} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -910,7 +954,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Opacity</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{Math.round((field.value || 0.1) * 100)}%</span></div>
-                          <FormControl><Slider min={0.01} max={1} step={0.01} value={[field.value || 0.1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0.01} max={1} step={0.01} value={field.value || 0.1} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -920,7 +964,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Horizontal Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0} max={200} step={5} value={field.value || 200} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -930,7 +974,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Vertical Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0} max={200} step={5} value={field.value || 200} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -940,7 +984,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Tile Scale</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{(field.value || 1).toFixed(2)}</span></div>
-                          <FormControl><Slider min={0.1} max={5} step={0.1} value={[field.value || 1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0.1} max={5} step={0.1} value={field.value || 1} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -950,7 +994,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Position Offset X</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={-200} max={200} step={5} value={field.value || 0} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -960,7 +1004,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Position Offset Y</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={-200} max={200} step={5} value={field.value || 0} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -970,13 +1014,18 @@ export function DesignSettingsForm() {
                 {/* LOGO WATERMARK CONTROLS */}
                 {form.watch("designSettings.watermark.type") === "LOGO" && (
                   <div className="space-y-4 animate-in fade-in slide-in-from-top-2">
+                    <ImageUploadField
+                      form={form}
+                      name="designSettings.watermark.logo.url"
+                      label="Watermark Logo Image"
+                    />
                     <FormField
                       control={form.control}
                       name="designSettings.watermark.logo.size"
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Size</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 100}px</span></div>
-                          <FormControl><Slider min={20} max={500} step={10} value={[field.value || 100]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={20} max={500} step={10} value={field.value || 100} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -986,7 +1035,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Rotation</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || -45}°</span></div>
-                          <FormControl><Slider min={-180} max={180} step={1} value={[field.value || -45]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={-180} max={180} step={1} value={field.value || -45} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -996,7 +1045,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Opacity</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{Math.round((field.value || 0.1) * 100)}%</span></div>
-                          <FormControl><Slider min={0.01} max={1} step={0.01} value={[field.value || 0.1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0.01} max={1} step={0.01} value={field.value || 0.1} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -1006,7 +1055,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Horizontal Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0} max={200} step={5} value={field.value || 200} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -1016,7 +1065,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Vertical Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0} max={200} step={5} value={field.value || 200} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -1026,7 +1075,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Tile Scale</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{(field.value || 1).toFixed(2)}</span></div>
-                          <FormControl><Slider min={0.1} max={5} step={0.1} value={[field.value || 1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={0.1} max={5} step={0.1} value={field.value || 1} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -1036,7 +1085,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Position Offset X</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={-200} max={200} step={5} value={field.value || 0} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -1046,7 +1095,7 @@ export function DesignSettingsForm() {
                       render={({ field }) => (
                         <FormItem>
                           <div className="flex justify-between"><FormLabel className="text-xs">Position Offset Y</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <FormControl><DebouncedSlider min={-200} max={200} step={5} value={field.value || 0} onChange={field.onChange} /></FormControl>
                         </FormItem>
                       )}
                     />

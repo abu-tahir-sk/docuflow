@@ -18,32 +18,23 @@ const PDFViewer = dynamic(
   { ssr: false, loading: () => <div className="flex items-center justify-center h-full w-full bg-white"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div> }
 )
 
-interface InvoicePreviewProps {
-  form: any
+interface StaticInvoicePreviewProps {
+  data: any
   company: any
   clients: any[]
 }
 
-export function InvoicePreview({ form, company, clients }: InvoicePreviewProps) {
-  const data = useWatch({ control: form.control })
+export function StaticInvoicePreview({ data, company, clients }: StaticInvoicePreviewProps) {
   const [mounted, setMounted] = useState(false)
-  const [debouncedData, setDebouncedData] = useState(data)
 
   useEffect(() => {
     setMounted(true)
   }, [])
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedData(data)
-    }, 300)
-    return () => clearTimeout(handler)
-  }, [data])
-
   const pdfDocument = useMemo(() => {
-    if (!debouncedData) return null
-    return <InvoicePdf data={debouncedData} company={company} clients={clients} />
-  }, [debouncedData, company, clients])
+    if (!data) return null
+    return <InvoicePdf data={data} company={company} clients={clients} />
+  }, [data, company, clients])
 
   if (!mounted) {
     return (
@@ -59,7 +50,7 @@ export function InvoicePreview({ form, company, clients }: InvoicePreviewProps) 
         {pdfDocument && (
           <PDFDownloadLink
             document={pdfDocument}
-            fileName={`invoice-${debouncedData?.invoiceNumber || 'draft'}.pdf`}
+            fileName={`invoice-${data?.invoiceNumber || 'draft'}.pdf`}
           >
             {({ loading }: any) => (
               <Button variant="default" size="sm" disabled={loading}>
@@ -89,4 +80,24 @@ export function InvoicePreview({ form, company, clients }: InvoicePreviewProps) 
       </div>
     </div>
   )
+}
+
+interface InvoicePreviewProps {
+  form: any
+  company: any
+  clients: any[]
+}
+
+export function InvoicePreview({ form, company, clients }: InvoicePreviewProps) {
+  const data = useWatch({ control: form.control })
+  const [debouncedData, setDebouncedData] = useState(data)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedData(data)
+    }, 300)
+    return () => clearTimeout(handler)
+  }, [data])
+
+  return <StaticInvoicePreview data={debouncedData} company={company} clients={clients} />
 }

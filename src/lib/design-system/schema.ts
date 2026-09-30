@@ -21,6 +21,7 @@ export const designSettingsSchema = z.object({
       offsetY: z.number().default(0),
     }),
     logo: z.object({
+      url: z.string().optional(),
       size: z.number().default(100),
       opacity: z.number().default(0.1),
       rotation: z.number().default(0),
@@ -107,6 +108,7 @@ export const defaultDesignSettings: DesignSettings = {
       offsetY: 0
     },
     logo: { 
+      url: "",
       size: 100, 
       opacity: 0.1, 
       rotation: 0, 

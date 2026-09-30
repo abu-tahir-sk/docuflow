@@ -15,9 +15,10 @@ import { useRouter } from "next/navigation"
 interface InvoiceBuilderProps {
   clients: any[]
   company: any
+  initialData?: any
 }
 
-export function InvoiceBuilder({ clients, company }: InvoiceBuilderProps) {
+export function InvoiceBuilder({ clients, company, initialData }: InvoiceBuilderProps) {
   const router = useRouter()
   const [isSaving, setIsSaving] = useState(false)
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit")
@@ -26,7 +27,19 @@ export function InvoiceBuilder({ clients, company }: InvoiceBuilderProps) {
   const form = useForm<any>({
     // @ts-ignore
     resolver: zodResolver(invoiceSchema),
-    defaultValues: {
+    defaultValues: initialData ? {
+      ...initialData,
+      issueDate: new Date(initialData.issueDate),
+      dueDate: new Date(initialData.dueDate),
+      designSettings: initialData.designSettings || company?.designSettings || defaultDesignSettings,
+      companyDetails: {
+        name: company?.name || "",
+        address: company?.address || "",
+        email: company?.email || "",
+        phone: company?.phone || "",
+        taxId: company?.taxId || "",
+      }
+    } : {
       clientId: "",
       currency: "INR",
       discountType: "PERCENTAGE",

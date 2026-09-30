@@ -76,10 +76,8 @@ export function AddClientModal({ onSuccess }: AddClientModalProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button type="button" variant="outline" className="h-10">
-          <Plus className="h-4 w-4 mr-2" /> Add
-        </Button>
+      <DialogTrigger render={<Button type="button" variant="outline" className="h-10" />}>
+        <Plus className="h-4 w-4 mr-2" /> Add
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

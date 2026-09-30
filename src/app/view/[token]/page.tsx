@@ -1,7 +1,7 @@
 import { Metadata } from "next"
 import { getInvoiceByToken } from "@/actions/invoices"
 import { notFound } from "next/navigation"
-import { InvoicePreview } from "@/components/invoices/invoice-preview"
+import { StaticInvoicePreview } from "@/components/invoices/invoice-preview"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 
@@ -67,7 +67,7 @@ export default async function PublicInvoicePage({ params }: { params: { token: s
         <div className="w-full max-w-5xl">
           {/* Reuse existing preview component */}
           <div className="bg-white rounded-lg shadow-sm border overflow-hidden" style={{ height: "calc(100vh - 120px)" }}>
-             <InvoicePreview 
+             <StaticInvoicePreview 
                 data={invoice} 
                 company={company} 
                 clients={[client]} // Pass only this client to avoid leaking others

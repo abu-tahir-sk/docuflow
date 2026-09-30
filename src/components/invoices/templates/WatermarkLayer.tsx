@@ -41,9 +41,9 @@ export function WatermarkLayer({ ds, companyLogo }: { ds: DesignSettings, compan
                         {ds.watermark.text.content}
                     </Text>
                 );
-            } else if (ds.watermark.type === 'LOGO' && companyLogo) {
+            } else if (ds.watermark.type === 'LOGO' && (ds.watermark.logo.url || companyLogo)) {
                 tiles.push(
-                    <Image key={`img-${r}-${c}`} src={companyLogo} style={{
+                    <Image key={`img-${r}-${c}`} src={ds.watermark.logo.url || companyLogo} style={{
                         position: 'absolute', left: x, top: y,
                         width: ds.watermark.logo.size || 100,
                         opacity: ds.watermark.logo.opacity || 0.1,
