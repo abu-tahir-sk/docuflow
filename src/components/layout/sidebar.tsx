@@ -8,7 +8,6 @@ import { SIDEBAR_ITEMS } from "@/lib/constants"
 import { siteConfig } from "@/config/site"
 
 import Image from "next/image"
-import logoImage from "@/public/logo-v3.jpg"
 import { signOut } from "next-auth/react"
 
 export function Sidebar() {
@@ -19,7 +18,7 @@ export function Sidebar() {
       <div className="flex h-full max-h-screen flex-col gap-2">
         <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
           <Link href="/" className="flex items-center gap-2 font-semibold">
-            <Image src={logoImage} alt="DocuFlow Logo" width={40} height={40} className="rounded-md" />
+            <Image src="/logo-v3.jpg" alt="DocuFlow Logo" width={40} height={40} className="rounded-md" />
             <span className="">{siteConfig.name}</span>
           </Link>
         </div>

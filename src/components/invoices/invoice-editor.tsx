@@ -13,10 +13,12 @@ import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
 import { DesignSettingsForm } from "./design-settings"
+import { AddClientModal } from "./add-client-modal"
 
 interface InvoiceEditorProps {
   form: any
   clients: any[]
+  onAddClient: (client: any) => void
 }
 
 const SectionHeader = ({ icon: Icon, title, description }: { icon: any, title: string, description?: string }) => (
@@ -31,7 +33,7 @@ const SectionHeader = ({ icon: Icon, title, description }: { icon: any, title: s
   </div>
 )
 
-export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
+export function InvoiceEditor({ form, clients, onAddClient }: InvoiceEditorProps) {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
     name: "items"
@@ -40,7 +42,7 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
   return (
     <Form {...form}>
       <form className="space-y-6">
-        <Accordion defaultValue={["client", "items"]} type="multiple" className="w-full space-y-4">
+        <Accordion type="multiple" defaultValue={["client", "items"]} className="w-full space-y-4">
           
           {/* CLIENT SECTION */}
           <AccordionItem value="client" className="bg-card border rounded-lg px-4 border-b-0 shadow-sm">
@@ -63,11 +65,9 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
                             </div>
                           ) : (
                             <Select onValueChange={field.onChange} value={field.value || ""}>
-                              <FormControl>
-                                <SelectTrigger className="h-10">
-                                  <SelectValue placeholder="Select a client..." />
-                                </SelectTrigger>
-                              </FormControl>
+                              <SelectTrigger className="h-10">
+                                <SelectValue placeholder="Select a client..." />
+                              </SelectTrigger>
                               <SelectContent>
                                 {clients.map(c => (
                                   <SelectItem key={c.id} value={c.id}>
@@ -78,9 +78,10 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
                             </Select>
                           )}
                         </div>
-                        <Button type="button" variant="outline" className="h-10">
-                          <Plus className="h-4 w-4 mr-2" /> Add
-                        </Button>
+                        <AddClientModal onSuccess={(client) => {
+                          onAddClient(client)
+                          form.setValue("clientId", client.id)
+                        }} />
                       </div>
                       <FormMessage />
                     </FormItem>
@@ -107,11 +108,9 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
                       <FormItem>
                         <FormLabel className="text-xs text-muted-foreground">Status</FormLabel>
                         <Select onValueChange={field.onChange} value={field.value}>
-                          <FormControl>
                             <SelectTrigger className="h-10">
                               <SelectValue placeholder="Select status" />
                             </SelectTrigger>
-                          </FormControl>
                           <SelectContent>
                             <SelectItem value="DRAFT">Draft</SelectItem>
                             <SelectItem value="SENT">Sent</SelectItem>
@@ -140,7 +139,7 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
                             </PopoverTrigger>
                           </FormControl>
                           <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                            <Calendar mode="single" selected={field.value} onSelect={field.onChange} />
                           </PopoverContent>
                         </Popover>
                       </FormItem>
@@ -162,7 +161,7 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
                             </PopoverTrigger>
                           </FormControl>
                           <PopoverContent className="w-auto p-0" align="start">
-                            <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
+                            <Calendar mode="single" selected={field.value} onSelect={field.onChange} />
                           </PopoverContent>
                         </Popover>
                       </FormItem>
@@ -275,11 +274,9 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
                     <FormItem>
                       <FormLabel className="text-xs text-muted-foreground">Discount Type</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
                           <SelectTrigger className="h-10">
                             <SelectValue placeholder="Select type" />
                           </SelectTrigger>
-                        </FormControl>
                         <SelectContent>
                           <SelectItem value="PERCENTAGE">Percentage (%)</SelectItem>
                           <SelectItem value="FIXED">Fixed Amount</SelectItem>
@@ -306,11 +303,9 @@ export function InvoiceEditor({ form, clients }: InvoiceEditorProps) {
                     <FormItem>
                       <FormLabel className="text-xs text-muted-foreground">Currency</FormLabel>
                       <Select onValueChange={field.onChange} value={field.value}>
-                        <FormControl>
                           <SelectTrigger className="h-10">
                             <SelectValue placeholder="Select currency" />
                           </SelectTrigger>
-                        </FormControl>
                         <SelectContent>
                           <SelectItem value="INR">INR (₹)</SelectItem>
                           <SelectItem value="USD">USD ($)</SelectItem>

@@ -21,6 +21,7 @@ export function InvoiceBuilder({ clients, company }: InvoiceBuilderProps) {
   const router = useRouter()
   const [isSaving, setIsSaving] = useState(false)
   const [activeTab, setActiveTab] = useState<"edit" | "preview">("edit")
+  const [localClients, setLocalClients] = useState<any[]>(clients)
 
   const form = useForm<any>({
     // @ts-ignore
@@ -37,6 +38,13 @@ export function InvoiceBuilder({ clients, company }: InvoiceBuilderProps) {
       notes: company?.defaultNotes || "",
       terms: company?.defaultTerms || "",
       designSettings: company?.designSettings || defaultDesignSettings,
+      companyDetails: {
+        name: company?.name || "",
+        address: company?.address || "",
+        email: company?.email || "",
+        phone: company?.phone || "",
+        taxId: company?.taxId || "",
+      }
     }
   })
 
@@ -91,14 +99,14 @@ export function InvoiceBuilder({ clients, company }: InvoiceBuilderProps) {
         </div>
         
         <div className="p-4">
-          <InvoiceEditor form={form} clients={clients} />
+          <InvoiceEditor form={form} clients={localClients} onAddClient={(newClient) => setLocalClients((prev) => [...prev, newClient])} />
         </div>
       </div>
 
       {/* Preview Panel */}
       <div className={`w-full md:w-1/2 flex-col overflow-y-auto bg-muted ${activeTab === "edit" ? "hidden md:flex" : "flex"}`}>
         <div className="p-4 flex justify-center min-h-full">
-          <InvoicePreview data={form.watch()} company={company} clients={clients} />
+          <InvoicePreview form={form} company={company} clients={localClients} />
         </div>
       </div>
     </div>

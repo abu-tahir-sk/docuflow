@@ -516,7 +516,7 @@ import { calculateInvoiceTotals } from '@/lib/invoices/calculations'; //[cite: 2
 
 export function InvoicePdf({ data, company, clients }: any) {
   // Resolve Template
-  const templateId = data.designSettings?.template || 'classic';
+  const templateId = data.template || 'classic';
   const selectedTemplate = INVOICE_TEMPLATES.find(t => t.id === templateId) || INVOICE_TEMPLATES[0];
   const TemplateComponent = selectedTemplate.component;
 
@@ -541,7 +541,7 @@ export function InvoicePdf({ data, company, clients }: any) {
     <Document>
       <TemplateComponent
         data={data}
-        company={company}
+        company={{ ...company, ...(data.companyDetails || {}) }}
         clients={clients}
         totals={totals}
         ds={ds}

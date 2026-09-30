@@ -2,7 +2,7 @@
 
 import { useFormContext } from "react-hook-form";
 import { CheckCircle2 } from "lucide-react";
-import { INVOICE_TEMPLATES } from "./templates/registry";
+import { INVOICE_TEMPLATES } from "./registry";
 import { cn } from "@/lib/utils";
 
 export function TemplateGallery() {

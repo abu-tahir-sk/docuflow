@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 
 export function TemplateGallery() {
     const form = useFormContext()
-    const selectedTemplate = form.watch("designSettings.template") || "classic"
+    const selectedTemplate = form.watch("template") || "classic"
 
     return (
         <div className="space-y-4">
@@ -25,7 +25,7 @@ export function TemplateGallery() {
                     return (
                         <div
                             key={template.id}
-                            onClick={() => form.setValue("designSettings.template", template.id)}
+                            onClick={() => form.setValue("template", template.id)}
                             className={cn(
                                 "relative cursor-pointer rounded-xl border-2 transition-all overflow-hidden group hover:shadow-md",
                                 isSelected ? "border-primary shadow-sm" : "border-border hover:border-primary/50"

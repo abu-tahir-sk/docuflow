@@ -521,6 +521,63 @@ const PRESET_COLORS = [
   { name: "Rose", hex: "#E11D48" },
 ]
 
+function ImageUploadField({ name, label, form }: { name: string, label: string, form: any }) {
+  return (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem className="flex flex-col gap-1.5">
+          <FormLabel className="text-xs font-medium">{label}</FormLabel>
+          <div className="flex items-center gap-3">
+            {field.value ? (
+              <div className="relative flex h-14 w-20 shrink-0 items-center justify-center overflow-hidden rounded-md border bg-muted/50 p-1">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={field.value} alt={label} className="max-h-full max-w-full object-contain" />
+              </div>
+            ) : (
+              <div className="flex h-14 w-20 shrink-0 items-center justify-center rounded-md border border-dashed bg-muted/20 text-[10px] text-muted-foreground">
+                No {label.toLowerCase()}
+              </div>
+            )}
+            <div className="flex flex-col gap-1 w-full">
+              <FormControl>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  className="h-8 cursor-pointer text-xs file:mr-2 file:rounded-md file:border-0 file:bg-primary/10 file:px-2 file:py-1 file:text-[10px] file:text-primary hover:file:bg-primary/20"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      const reader = new FileReader()
+                      reader.onloadend = () => {
+                        field.onChange(reader.result as string)
+                      }
+                      reader.readAsDataURL(file)
+                    } else {
+                      field.onChange("")
+                    }
+                  }}
+                />
+              </FormControl>
+              {field.value && (
+                <button
+                  type="button"
+                  onClick={() => field.onChange("")}
+                  className="text-left text-[10px] text-destructive hover:underline"
+                >
+                  Remove {label.toLowerCase()}
+                </button>
+              )}
+            </div>
+          </div>
+        </FormItem>
+      )}
+    />
+  )
+}
+
+
 export function DesignSettingsForm() {
   const form = useFormContext()
 
@@ -531,11 +588,18 @@ export function DesignSettingsForm() {
       <TemplateGallery />
 
       <Accordion className="w-full">
-        {/* 2. BRANDING */}
+        {/* 2. BRANDING & COMPANY */}
         <AccordionItem value="branding" className="border-b-0">
-          <AccordionTrigger className="hover:no-underline text-sm font-medium border-b pb-2 mb-4">Branding</AccordionTrigger>
+          <AccordionTrigger className="hover:no-underline text-sm font-medium border-b pb-2 mb-4">Branding & Company</AccordionTrigger>
           <AccordionContent className="space-y-4 pt-2">
-            <p className="text-xs text-muted-foreground mb-4">Upload Logo, Signature, and Seal in your Company Settings.</p>
+            
+            <div className="space-y-4 pb-4 border-b">
+              <ImageUploadField form={form} name="companyDetails.logoUrl" label="Company Logo" />
+              <div className="grid grid-cols-2 gap-4">
+                <ImageUploadField form={form} name="companyDetails.signatureUrl" label="Signature" />
+                <ImageUploadField form={form} name="companyDetails.sealUrl" label="Company Seal" />
+              </div>
+            </div>
             <FormField
               control={form.control}
               name="designSettings.layout.logoPosition"
@@ -555,6 +619,62 @@ export function DesignSettingsForm() {
                 </FormItem>
               )}
             />
+
+            <div className="pt-4 border-t mt-4 space-y-4">
+              <h4 className="text-sm font-medium">Company Information</h4>
+              <FormField
+                control={form.control}
+                name="companyDetails.name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Company Name</FormLabel>
+                    <FormControl><Input placeholder="Your Company Ltd" {...field} value={field.value || ""} /></FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="companyDetails.address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
+                    <FormControl><Input placeholder="123 Business St..." {...field} value={field.value || ""} /></FormControl>
+                  </FormItem>
+                )}
+              />
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="companyDetails.email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl><Input placeholder="hello@company.com" {...field} value={field.value || ""} /></FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="companyDetails.phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone</FormLabel>
+                      <FormControl><Input placeholder="+1 234 567 8900" {...field} value={field.value || ""} /></FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <FormField
+                control={form.control}
+                name="companyDetails.taxId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tax ID / GSTIN</FormLabel>
+                    <FormControl><Input placeholder="TAX-12345" {...field} value={field.value || ""} /></FormControl>
+                  </FormItem>
+                )}
+              />
+            </div>
           </AccordionContent>
         </AccordionItem>
 
@@ -667,7 +787,7 @@ export function DesignSettingsForm() {
                     <FormItem>
                       <div className="flex justify-between">
                         <FormLabel className="text-xs">{label}</FormLabel>
-                        <span className="text-xs text-muted-foreground">{field.value}px</span>
+                        <span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || min}px</span>
                       </div>
                       <FormControl>
                         <Slider
@@ -769,8 +889,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.fontSize"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Font Size</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={10} max={200} step={1} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Font Size</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 48}px</span></div>
+                          <FormControl><Slider min={10} max={200} step={1} value={[field.value || 48]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -779,8 +899,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.rotation"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Rotation</FormLabel><span className="text-xs text-muted-foreground">{field.value}°</span></div>
-                          <FormControl><Slider min={-180} max={180} step={1} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Rotation</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || -45}°</span></div>
+                          <FormControl><Slider min={-180} max={180} step={1} value={[field.value || -45]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -789,8 +909,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.opacity"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Opacity</FormLabel><span className="text-xs text-muted-foreground">{Math.round((field.value || 0) * 100)}%</span></div>
-                          <FormControl><Slider min={0.01} max={1} step={0.01} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Opacity</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{Math.round((field.value || 0.1) * 100)}%</span></div>
+                          <FormControl><Slider min={0.01} max={1} step={0.01} value={[field.value || 0.1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -799,8 +919,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.horizontalGap"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Horizontal Gap</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Horizontal Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
+                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -809,8 +929,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.verticalGap"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Vertical Gap</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Vertical Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
+                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -819,8 +939,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.tileScale"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Tile Scale</FormLabel><span className="text-xs text-muted-foreground">{field.value}</span></div>
-                          <FormControl><Slider min={0.1} max={5} step={0.1} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Tile Scale</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{(field.value || 1).toFixed(2)}</span></div>
+                          <FormControl><Slider min={0.1} max={5} step={0.1} value={[field.value || 1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -829,8 +949,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.offsetX"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset X</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset X</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
+                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -839,8 +959,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.text.offsetY"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset Y</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset Y</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
+                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -855,8 +975,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.size"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Size</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={20} max={500} step={10} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Size</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 100}px</span></div>
+                          <FormControl><Slider min={20} max={500} step={10} value={[field.value || 100]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -865,8 +985,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.rotation"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Rotation</FormLabel><span className="text-xs text-muted-foreground">{field.value}°</span></div>
-                          <FormControl><Slider min={-180} max={180} step={1} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Rotation</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || -45}°</span></div>
+                          <FormControl><Slider min={-180} max={180} step={1} value={[field.value || -45]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -875,8 +995,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.opacity"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Opacity</FormLabel><span className="text-xs text-muted-foreground">{Math.round((field.value || 0) * 100)}%</span></div>
-                          <FormControl><Slider min={0.01} max={1} step={0.01} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Opacity</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{Math.round((field.value || 0.1) * 100)}%</span></div>
+                          <FormControl><Slider min={0.01} max={1} step={0.01} value={[field.value || 0.1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -885,8 +1005,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.horizontalGap"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Horizontal Gap</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Horizontal Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
+                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -895,8 +1015,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.verticalGap"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Vertical Gap</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={0} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Vertical Gap</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 200}px</span></div>
+                          <FormControl><Slider min={0} max={200} step={5} value={[field.value || 200]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -905,8 +1025,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.tileScale"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Tile Scale</FormLabel><span className="text-xs text-muted-foreground">{field.value}</span></div>
-                          <FormControl><Slider min={0.1} max={5} step={0.1} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Tile Scale</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{(field.value || 1).toFixed(2)}</span></div>
+                          <FormControl><Slider min={0.1} max={5} step={0.1} value={[field.value || 1]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -915,8 +1035,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.offsetX"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset X</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset X</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
+                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />
@@ -925,8 +1045,8 @@ export function DesignSettingsForm() {
                       name="designSettings.watermark.logo.offsetY"
                       render={({ field }) => (
                         <FormItem>
-                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset Y</FormLabel><span className="text-xs text-muted-foreground">{field.value}px</span></div>
-                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
+                          <div className="flex justify-between"><FormLabel className="text-xs">Position Offset Y</FormLabel><span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 0}px</span></div>
+                          <FormControl><Slider min={-200} max={200} step={5} value={[field.value || 0]} onValueChange={(v) => field.onChange((v as number[])[0])} /></FormControl>
                         </FormItem>
                       )}
                     />

@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import logoImage from "@/public/logo-v3.jpg"
 
 import { Sidebar } from "@/components/layout/sidebar"
 import { Menu, FileText, Bell, Search, User } from "lucide-react"
@@ -54,7 +53,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                     href="/dashboard"
                     className="flex items-center gap-2 text-lg font-semibold mb-4"
                   >
-                    <Image src={logoImage} alt="DocuFlow Logo" width={40} height={40} className="rounded-md" />
+                    <Image src="/logo-v3.jpg" alt="DocuFlow Logo" width={40} height={40} className="rounded-md" />
                     <span>DocuFlow</span>
                   </Link>
                   <Link

@@ -67,6 +67,21 @@ export async function createOrUpdateInvoice(data: any) {
       parsedData.discountType
     )
     
+    
+    // Update company details if provided
+    if (parsedData.companyDetails) {
+      await prisma.company.update({
+        where: { id: company.id },
+        data: {
+          name: parsedData.companyDetails.name || company.name,
+          address: parsedData.companyDetails.address,
+          email: parsedData.companyDetails.email,
+          phone: parsedData.companyDetails.phone,
+          taxId: parsedData.companyDetails.taxId,
+        }
+      })
+    }
+
     let invoice;
 
     if (parsedData.id) {

@@ -32,6 +32,14 @@ export const invoiceSchema = z.object({
   template: z.string().default("minimal"),
   designSettings: designSettingsSchema.optional().nullable(),
   
+  companyDetails: z.object({
+    name: z.string().optional(),
+    address: z.string().optional(),
+    email: z.string().optional(),
+    phone: z.string().optional(),
+    taxId: z.string().optional(),
+  }).optional(),
+  
   items: z.array(invoiceItemSchema).min(1, "At least one item is required"),
 })
 

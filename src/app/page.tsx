@@ -108,7 +108,7 @@ export default function Home() {
             
             {/* Left Card */}
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 6, ease: "easeInOut" }} className="w-64 h-44 bg-background/60 backdrop-blur-2xl border border-border/50 rounded-3xl p-5 shadow-xl dark:shadow-2xl relative overflow-hidden flex flex-col justify-between mb-4 pointer-events-auto hover:bg-background/80 transition-colors hidden md:flex">
-              <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 dark:opacity-10 mix-blend-soft-light" />
+              <div className="absolute inset-0 bg-black/5 opacity-5 dark:opacity-10 mix-blend-soft-light" />
               <div className="relative z-10 w-full h-full flex flex-col justify-center items-center pb-2">
                 <svg width="120" height="60" viewBox="0 0 120 60" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-foreground opacity-90">
                   <path d="M20 40 C 30 20, 35 15, 40 35 C 45 55, 50 40, 55 35 C 60 30, 70 40, 75 35 C 80 30, 85 30, 95 35" />
@@ -125,7 +125,7 @@ export default function Home() {
 
             {/* Middle Card 1 (New Brief) */}
             <motion.div animate={{ y: [0, -8, 0] }} transition={{ repeat: Infinity, duration: 4, ease: "easeInOut", delay: 1 }} className="w-36 h-36 bg-background/80 backdrop-blur-3xl border border-border/50 rounded-[28px] flex flex-col items-center justify-center gap-3 mb-10 shadow-xl dark:shadow-2xl pointer-events-auto hover:bg-background transition-colors relative overflow-hidden hidden sm:flex">
-               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 dark:opacity-10 mix-blend-soft-light" />
+               <div className="absolute inset-0 bg-black/5 opacity-5 dark:opacity-10 mix-blend-soft-light" />
                <FileText className="w-8 h-8 text-foreground relative z-10" />
                <span className="text-sm font-medium text-foreground relative z-10 flex items-center gap-1">New Brief <div className="w-1.5 h-1.5 rounded-full bg-red-500" /></span>
             </motion.div>
@@ -144,7 +144,7 @@ export default function Home() {
 
             {/* Right Card: UI Mockup */}
             <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 7, ease: "easeInOut", delay: 3 }} className="w-80 h-52 bg-background/60 backdrop-blur-2xl border border-border/50 rounded-3xl p-5 shadow-xl dark:shadow-2xl relative overflow-hidden pointer-events-auto flex flex-col mb-2 hidden lg:flex">
-               <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 dark:opacity-10 mix-blend-soft-light" />
+               <div className="absolute inset-0 bg-black/5 opacity-5 dark:opacity-10 mix-blend-soft-light" />
                <div className="relative z-10 flex-1 w-full bg-muted/50 rounded-xl border border-border/30 p-3 flex flex-col gap-3">
                   <div className="flex gap-2 w-full">
                     <div className="w-24 h-16 bg-muted rounded-lg relative overflow-hidden">

@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { siteConfig } from "@/config/site"
 import Image from "next/image"
-import logoImage from "@/public/logo-v3.jpg"
 import { SIDEBAR_ITEMS } from "@/lib/constants"
 
 export function MobileNav() {
@@ -35,7 +34,7 @@ export function MobileNav() {
           className="flex items-center space-x-2"
           onOpenChange={setOpen}
         >
-          <Image src={logoImage} alt="DocuFlow Logo" width={36} height={36} className="rounded-md" />
+          <Image src="/logo-v3.jpg" alt="DocuFlow Logo" width={36} height={36} className="rounded-md" />
           <span className="font-bold">{siteConfig.name}</span>
         </MobileLink>
         <div className="flex flex-col space-y-3 mt-6">
