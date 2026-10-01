@@ -33,11 +33,14 @@ export function InvoiceBuilder({ clients, company, initialData }: InvoiceBuilder
       dueDate: new Date(initialData.dueDate),
       designSettings: initialData.designSettings || company?.designSettings || defaultDesignSettings,
       companyDetails: {
-        name: company?.name || "",
-        address: company?.address || "",
-        email: company?.email || "",
-        phone: company?.phone || "",
-        taxId: company?.taxId || "",
+        name: initialData.companyDetails?.name ?? company?.name ?? "",
+        address: initialData.companyDetails?.address ?? company?.address ?? "",
+        email: initialData.companyDetails?.email ?? company?.email ?? "",
+        phone: initialData.companyDetails?.phone ?? company?.phone ?? "",
+        taxId: initialData.companyDetails?.taxId ?? company?.taxId ?? "",
+        logoUrl: initialData.companyDetails?.logoUrl ?? company?.logoUrl ?? "",
+        signatureUrl: initialData.companyDetails?.signatureUrl ?? company?.signatureUrl ?? "",
+        sealUrl: initialData.companyDetails?.sealUrl ?? company?.sealUrl ?? "",
       }
     } : {
       clientId: "",
@@ -57,6 +60,9 @@ export function InvoiceBuilder({ clients, company, initialData }: InvoiceBuilder
         email: company?.email || "",
         phone: company?.phone || "",
         taxId: company?.taxId || "",
+        logoUrl: company?.logoUrl || "",
+        signatureUrl: company?.signatureUrl || "",
+        sealUrl: company?.sealUrl || "",
       }
     }
   })

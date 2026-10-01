@@ -38,6 +38,9 @@ export const invoiceSchema = z.object({
     email: z.string().optional(),
     phone: z.string().optional(),
     taxId: z.string().optional(),
+    logoUrl: z.string().optional(),
+    signatureUrl: z.string().optional(),
+    sealUrl: z.string().optional(),
   }).optional(),
   
   items: z.array(invoiceItemSchema).min(1, "At least one item is required"),

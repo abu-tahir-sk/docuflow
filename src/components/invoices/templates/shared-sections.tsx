@@ -6,24 +6,24 @@ export const CompanyInfo = ({ company, vis, styles }: any) => {
     if (!company) return null;
     return (
         <View style={styles.companyContainer || {}}>
-            {vis.logo !== false && company?.logoUrl && (
+            {vis.showLogo !== false && vis.logo !== false && company?.logoUrl && (
                 <Image src={company.logoUrl} style={styles.logo || { width: 80, height: 80, objectFit: 'contain', marginBottom: 10 }} />
             )}
             {company?.name && <Text style={styles.companyName}>{company.name}</Text>}
-            {company?.address && <Text style={styles.textNormal}>{company.address}</Text>}
-            {company?.city && (
+            {vis.showCompanyAddress !== false && company?.address && <Text style={styles.textNormal}>{company.address}</Text>}
+            {vis.showCompanyAddress !== false && company?.city && (
                 <Text style={styles.textNormal}>
                     {[company.city, company.state, company.postalCode].filter(Boolean).join(', ')}
                 </Text>
             )}
-            {company?.country && <Text style={styles.textNormal}>{company.country}</Text>}
+            {vis.showCompanyAddress !== false && company?.country && <Text style={styles.textNormal}>{company.country}</Text>}
             
-            {company?.email && <Text style={styles.textNormal}>{company.email}</Text>}
-            {company?.phone && <Text style={styles.textNormal}>{company.phone}</Text>}
-            {company?.website && <Text style={styles.textNormal}>{company.website}</Text>}
+            {vis.showCompanyEmail !== false && company?.email && <Text style={styles.textNormal}>{company.email}</Text>}
+            {vis.showCompanyPhone !== false && company?.phone && <Text style={styles.textNormal}>{company.phone}</Text>}
+            {vis.showCompanyWebsite !== false && company?.website && <Text style={styles.textNormal}>{company.website}</Text>}
             
-            {vis.gstin !== false && company?.gstin && <Text style={styles.textNormal}>GSTIN: {company.gstin}</Text>}
-            {vis.pan !== false && company?.pan && <Text style={styles.textNormal}>PAN: {company.pan}</Text>}
+            {vis.showGSTIN !== false && vis.gstin !== false && company?.gstin && <Text style={styles.textNormal}>GSTIN: {company.gstin}</Text>}
+            {vis.showPAN !== false && vis.pan !== false && company?.pan && <Text style={styles.textNormal}>PAN: {company.pan}</Text>}
         </View>
     );
 };
@@ -39,10 +39,10 @@ export const ClientInfo = ({ client, vis, styles }: any) => {
             {client.name && <Text style={styles.textBold}>{client.name}</Text>}
             {client.clientCompany && <Text style={styles.textNormal}>{client.clientCompany}</Text>}
             
-            {client.email && <Text style={styles.textNormal}>{client.email}</Text>}
-            {client.phone && <Text style={styles.textNormal}>{client.phone}</Text>}
+            {vis.showClientEmail !== false && vis.clientEmail !== false && client.email && <Text style={styles.textNormal}>{client.email}</Text>}
+            {vis.showClientPhone !== false && vis.clientPhone !== false && client.phone && <Text style={styles.textNormal}>{client.phone}</Text>}
             
-            {vis.billingAddress !== false && client.address && (
+            {vis.showBillingAddress !== false && vis.billingAddress !== false && client.address && (
                 <View style={{ marginTop: 4 }}>
                     <Text style={styles.textNormal}>{client.address}</Text>
                     {client.city && (
@@ -53,6 +53,19 @@ export const ClientInfo = ({ client, vis, styles }: any) => {
                     {client.country && <Text style={styles.textNormal}>{client.country}</Text>}
                 </View>
             )}
+            
+            {vis.showShippingAddress !== false && vis.shippingAddress !== false && client.shippingAddress && (
+                <View style={{ marginTop: 8 }}>
+                    <Text style={styles.textBold}>Shipping Address:</Text>
+                    <Text style={styles.textNormal}>{client.shippingAddress}</Text>
+                    {client.shippingCity && (
+                        <Text style={styles.textNormal}>
+                            {[client.shippingCity, client.shippingState, client.shippingPostalCode].filter(Boolean).join(', ')}
+                        </Text>
+                    )}
+                    {client.shippingCountry && <Text style={styles.textNormal}>{client.shippingCountry}</Text>}
+                </View>
+            )}
         </View>
     );
 };
@@ -60,37 +73,37 @@ export const ClientInfo = ({ client, vis, styles }: any) => {
 export const InvoiceMeta = ({ data, vis, styles }: any) => {
     return (
         <View style={styles.metaContainer || {}}>
-            {data.invoiceNumber && (
+            {vis.showInvoiceNumber !== false && data.invoiceNumber && (
                 <View style={styles.metaGrid}>
                     <Text style={styles.metaLabel}>Invoice No:</Text>
                     <Text style={styles.metaValue}>{data.invoiceNumber}</Text>
                 </View>
             )}
-            {data.issueDate && (
+            {vis.showIssueDate !== false && data.issueDate && (
                 <View style={styles.metaGrid}>
                     <Text style={styles.metaLabel}>Issue Date:</Text>
                     <Text style={styles.metaValue}>{format(new Date(data.issueDate), "MMM dd, yyyy")}</Text>
                 </View>
             )}
-            {data.dueDate && (
+            {vis.showDueDate !== false && data.dueDate && (
                 <View style={styles.metaGrid}>
                     <Text style={styles.metaLabel}>Due Date:</Text>
                     <Text style={styles.metaValue}>{format(new Date(data.dueDate), "MMM dd, yyyy")}</Text>
                 </View>
             )}
-            {data.status && (
+            {vis.showStatus !== false && vis.status !== false && data.status && (
                 <View style={styles.metaGrid}>
                     <Text style={styles.metaLabel}>Status:</Text>
                     <Text style={styles.metaValue}>{data.status}</Text>
                 </View>
             )}
-            {data.paymentTerms && (
+            {vis.showPaymentTerms !== false && data.paymentTerms && (
                 <View style={styles.metaGrid}>
                     <Text style={styles.metaLabel}>Terms:</Text>
                     <Text style={styles.metaValue}>{data.paymentTerms}</Text>
                 </View>
             )}
-            {data.poReference && (
+            {vis.showPO !== false && data.poReference && (
                 <View style={styles.metaGrid}>
                     <Text style={styles.metaLabel}>PO Ref:</Text>
                     <Text style={styles.metaValue}>{data.poReference}</Text>
@@ -101,11 +114,11 @@ export const InvoiceMeta = ({ data, vis, styles }: any) => {
 };
 
 export const InvoicePayment = ({ company, vis, styles }: any) => {
-    if (vis.paymentInfo === false) return null;
+    if (vis.showPaymentInfo === false || vis.paymentInfo === false) return null;
     
     return (
         <View style={styles.paymentContainer || {}}>
-            {vis.bankDetails !== false && (
+            {vis.showBankDetails !== false && vis.bankDetails !== false && (
                 <View>
                     {company?.bankName && <Text style={styles.textNormal}>Bank: {company.bankName}</Text>}
                     {company?.accountName && <Text style={styles.textNormal}>Acct Name: {company.accountName}</Text>}
@@ -114,10 +127,10 @@ export const InvoicePayment = ({ company, vis, styles }: any) => {
                     {company?.swift && <Text style={styles.textNormal}>SWIFT: {company.swift}</Text>}
                 </View>
             )}
-            {vis.upiQr !== false && company?.upiId && (
+            {vis.showUPI !== false && vis.showQR !== false && vis.upiQr !== false && company?.upiId && (
                 <Text style={styles.textNormal}>UPI: {company.upiId}</Text>
             )}
-            {vis.paymentInstructions !== false && company?.paymentInstructions && (
+            {vis.showPaymentInstructions !== false && vis.paymentInstructions !== false && company?.paymentInstructions && (
                 <Text style={styles.textNormal}>{company.paymentInstructions}</Text>
             )}
         </View>
@@ -125,17 +138,20 @@ export const InvoicePayment = ({ company, vis, styles }: any) => {
 };
 
 export const InvoiceTermsAndNotes = ({ data, vis, styles }: any) => {
-    if ((vis.notes === false || !data.notes) && (vis.terms === false || !data.terms)) return null;
+    const shouldShowNotes = vis.showNotes !== false && vis.notes !== false && data.notes;
+    const shouldShowTerms = vis.showTerms !== false && vis.terms !== false && data.terms;
+    
+    if (!shouldShowNotes && !shouldShowTerms) return null;
     
     return (
         <View style={styles.termsContainer || { marginTop: 20 }} wrap={false}>
-            {vis.notes !== false && data.notes && (
+            {shouldShowNotes && (
                 <View style={styles.notesBlock || { marginBottom: 12 }}>
                     <Text style={styles.sectionTitle}>Notes</Text>
                     <Text style={styles.textNormal}>{data.notes}</Text>
                 </View>
             )}
-            {vis.terms !== false && data.terms && (
+            {shouldShowTerms && (
                 <View style={styles.termsBlock || {}}>
                     <Text style={styles.sectionTitle}>Terms & Conditions</Text>
                     <Text style={styles.textNormal}>{data.terms}</Text>
@@ -146,27 +162,30 @@ export const InvoiceTermsAndNotes = ({ data, vis, styles }: any) => {
 };
 
 export const InvoiceSignatures = ({ company, vis, styles }: any) => {
-    if (vis.signature === false && vis.seal === false) return null;
+    const shouldShowSignature = vis.showSignature !== false && vis.signature !== false;
+    const shouldShowSeal = vis.showSeal !== false && vis.seal !== false;
+    
+    if (!shouldShowSignature && !shouldShowSeal) return null;
     
     return (
         <View style={styles.signatureContainer || { flexDirection: 'row', justifyContent: 'space-between', marginTop: 40 }} wrap={false}>
             <View style={styles.sealBlock || { width: 150, alignItems: 'center' }}>
-                {vis.seal !== false && company?.sealUrl && <Image src={company.sealUrl} style={styles.sealImage || { width: 80, height: 80, objectFit: 'contain' }} />}
+                {shouldShowSeal && company?.sealUrl && <Image src={company.sealUrl} style={styles.sealImage || { width: 80, height: 80, objectFit: 'contain' }} />}
             </View>
             <View style={styles.signatureBlock || { width: 200, alignItems: 'center' }}>
-                {vis.signature !== false && company?.signatureUrl ? (
+                {shouldShowSignature && company?.signatureUrl ? (
                     <Image src={company.signatureUrl} style={styles.signatureImage || { width: 120, height: 60, objectFit: 'contain', marginBottom: 5 }} />
                 ) : (
-                    vis.signature !== false ? <View style={{ height: 60, marginBottom: 5 }} /> : null
+                    shouldShowSignature ? <View style={{ height: 60, marginBottom: 5 }} /> : null
                 )}
-                {vis.signature !== false && <Text style={styles.signatureText || { borderTop: '1px solid #000', paddingTop: 4, width: '100%', textAlign: 'center' }}>Authorized Signature</Text>}
+                {shouldShowSignature && <Text style={styles.signatureText || { borderTop: '1px solid #000', paddingTop: 4, width: '100%', textAlign: 'center' }}>Authorized Signature</Text>}
             </View>
         </View>
     );
 };
 
 export const InvoiceFooter = ({ company, vis, styles }: any) => {
-    if (vis.footer === false) return null;
+    if (vis.showFooter === false || vis.footer === false) return null;
     return (
         <View style={styles.footerContainer || { position: 'absolute', bottom: 30, left: 40, right: 40, textAlign: 'center' }} fixed>
             <Text style={styles.footerText}>{company?.name} • Generated by DocuFlow</Text>
@@ -177,7 +196,7 @@ export const InvoiceFooter = ({ company, vis, styles }: any) => {
 export const InvoiceTable = ({ data, vis, styles }: any) => {
     const hasDiscount = data.items?.some((i: any) => i.discount > 0);
     const hasTax = data.items?.some((i: any) => i.tax > 0);
-    const hasHsn = vis.hsnSac && data.items?.some((i: any) => i.hsnSac);
+    const hasHsn = vis.showHSNSAC !== false && vis.hsnSac !== false && data.items?.some((i: any) => i.hsnSac);
 
     return (
         <View style={styles.table}>

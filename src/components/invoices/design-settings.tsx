@@ -549,9 +549,9 @@ function DebouncedSlider({ value, onChange, min, max, step }: any) {
       min={min}
       max={max}
       step={step}
-      value={[localValue]}
-      onValueChange={(v) => setLocalValue(v[0])}
-      onValueCommit={(v) => onChange(v[0])}
+      value={[typeof localValue === 'number' && !isNaN(localValue) ? localValue : (Number(localValue) || min || 0)]}
+      onValueChange={(v: any) => setLocalValue(Array.isArray(v) ? v[0] : v)}
+      onValueCommitted={(v: any) => onChange(Array.isArray(v) ? v[0] : v)}
     />
   )
 }
@@ -1111,23 +1111,38 @@ export function DesignSettingsForm() {
           <AccordionTrigger className="hover:no-underline text-sm font-medium border-b pb-2 mb-4">Visibility</AccordionTrigger>
           <AccordionContent className="space-y-3 pt-2">
             {[
-              { name: "logo", label: "Show Logo" },
-              { name: "signature", label: "Show Signature" },
-              { name: "seal", label: "Show Seal / Stamp" },
-              { name: "bankDetails", label: "Show Bank Details" },
-              { name: "paymentInfo", label: "Show Payment Info" },
-              { name: "upiQr", label: "Show UPI QR" },
-              { name: "gstin", label: "Show GSTIN" },
-              { name: "pan", label: "Show PAN" },
-              { name: "billingAddress", label: "Show Billing Address" },
-              { name: "notes", label: "Show Notes" },
-              { name: "terms", label: "Show Terms & Conditions" },
-              { name: "footer", label: "Show Footer" },
+              { name: "showLogo", label: "Show Logo" },
+              { name: "showCompanyEmail", label: "Show Company Email" },
+              { name: "showCompanyPhone", label: "Show Company Phone" },
+              { name: "showCompanyAddress", label: "Show Company Address" },
+              { name: "showCompanyWebsite", label: "Show Company Website" },
+              { name: "showClientEmail", label: "Show Client Email" },
+              { name: "showClientPhone", label: "Show Client Phone" },
+              { name: "showBillingAddress", label: "Show Billing Address" },
+              { name: "showShippingAddress", label: "Show Shipping Address" },
+              { name: "showGSTIN", label: "Show GSTIN" },
+              { name: "showPAN", label: "Show PAN" },
+              { name: "showHSNSAC", label: "Show HSN/SAC" },
+              { name: "showPaymentInfo", label: "Show Payment Info" },
+              { name: "showBankDetails", label: "Show Bank Details" },
+              { name: "showUPI", label: "Show UPI" },
+              { name: "showQR", label: "Show QR" },
+              { name: "showPaymentInstructions", label: "Show Payment Instructions" },
+              { name: "showStatus", label: "Show Status" },
+              { name: "showInvoiceNumber", label: "Show Invoice Number" },
+              { name: "showIssueDate", label: "Show Issue Date" },
+              { name: "showDueDate", label: "Show Due Date" },
+              { name: "showPO", label: "Show PO Reference" },
+              { name: "showSignature", label: "Show Signature" },
+              { name: "showSeal", label: "Show Seal / Stamp" },
+              { name: "showNotes", label: "Show Notes" },
+              { name: "showTerms", label: "Show Terms & Conditions" },
+              { name: "showFooter", label: "Show Footer" },
             ].map(({ name, label }) => (
               <FormField
                 key={name}
                 control={form.control}
-                name={`designSettings.visibility.${name}`}
+                name={`designSettings.visibility.${name}` as any}
                 render={({ field }) => (
                   <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 hover:bg-muted/50 transition-colors">
                     <FormLabel className="text-xs cursor-pointer w-full font-normal">{label}</FormLabel>

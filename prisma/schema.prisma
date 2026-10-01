@@ -44,6 +44,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   companies     Company[]
+  quotations    Quotation[]
   
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -144,6 +145,7 @@ model Client {
   updatedAt         DateTime  @updatedAt
 
   invoices          Invoice[]
+  quotations        Quotation[]
 }
 
 model Invoice {
@@ -228,4 +230,45 @@ model DocumentVersion {
   snapshotData      String    @db.Text // JSON string of the invoice data at this version
   
   createdAt         DateTime  @default(now())
+}
+
+model Quotation {
+  id                String    @id @default(cuid())
+  quotationNumber   String
+  clientId          String
+  client            Client    @relation(fields: [clientId], references: [id], onDelete: Restrict)
+  authorId          String
+  author            User      @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  
+  issueDate         DateTime
+  validUntil        DateTime
+  currency          String    @default("INR")
+  status            String    @default("DRAFT")
+  
+  discountType      String?
+  discountValue     Float     @default(0)
+  
+  notes             String?   @db.Text
+  terms             String?   @db.Text
+  template          String    @default("minimal")
+  designSettings    Json?
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  items             QuotationItem[]
+}
+
+model QuotationItem {
+  id                String    @id @default(cuid())
+  quotationId       String
+  quotation         Quotation @relation(fields: [quotationId], references: [id], onDelete: Cascade)
+  
+  description       String    @db.Text
+  quantity          Float     @default(1)
+  unit              String    @default("Piece")
+  unitPrice         Float     @default(0)
+  discountType      String?
+  discountValue     Float     @default(0)
+  taxRate           Float     @default(0)
 }

@@ -58,7 +58,7 @@ export function ModernTemplate({ data, company, clients, totals, ds }: any) {
                 <View style={styles.infoRow}>
                     <View style={styles.billToCol}>
                         <Text style={styles.sectionTitle}>Billed To</Text>
-                        <ClientInfo client={selectedClient} vis={{...vis, clientEmail: true, clientPhone: true, billingAddress: true}} styles={{...styles, textNormal: { ...styles.textNormal, color: colors.primary }}} />
+                        <ClientInfo client={selectedClient} vis={vis} styles={{...styles, textNormal: { ...styles.textNormal, color: colors.primary }}} />
                     </View>
                     <View style={styles.paymentCol}>
                         <Text style={styles.sectionTitle}>Payment Details</Text>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Page, Text, View, StyleSheet } from '@react-pdf/renderer';
 
-export function StubTemplate() {
+export function StubTemplate(props: any) {
     return (
         <Page size="A4" style={{ padding: 60, fontFamily: 'Helvetica' }}>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
