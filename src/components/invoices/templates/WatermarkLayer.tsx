@@ -1,13 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from '@react-pdf/renderer';
-import { DesignSettings } from '@/lib/design-system/schema'; //
-
-// Helper to map font families[cite: 2]
-const getFontFamilyBold = (family: string) => {
-    if (family?.includes('serif') || family?.includes('Georgia')) return 'Times-Bold';
-    if (family?.includes('mono') || family?.includes('Courier')) return 'Courier-Bold';
-    return 'Helvetica-Bold';
-};
+import { DesignSettings } from '@/lib/design-system/schema';
+import { getFontFamilyBold } from './font-utils';
 
 export function WatermarkLayer({ ds, companyLogo }: { ds: DesignSettings, companyLogo?: string }) {
     if (!ds.watermark.enabled) return null;
@@ -34,8 +28,8 @@ export function WatermarkLayer({ ds, companyLogo }: { ds: DesignSettings, compan
                         position: 'absolute', left: x, top: y,
                         color: ds.watermark.text.color || '#000000',
                         opacity: ds.watermark.text.opacity || 0.1,
-                        transform: `scale(${scale}) rotate(${ds.watermark.text.rotation || 0}deg)`,
-                        fontSize: ds.watermark.text.fontSize || 48,
+                        transform: `rotate(${ds.watermark.text.rotation || 0}deg)`,
+                        fontSize: (ds.watermark.text.fontSize || 48) * scale,
                         fontFamily: getFontFamilyBold(ds.watermark.text.fontFamily),
                     }}>
                         {ds.watermark.text.content}
@@ -45,9 +39,10 @@ export function WatermarkLayer({ ds, companyLogo }: { ds: DesignSettings, compan
                 tiles.push(
                     <Image key={`img-${r}-${c}`} src={ds.watermark.logo.url || companyLogo} style={{
                         position: 'absolute', left: x, top: y,
-                        width: ds.watermark.logo.size || 100,
+                        width: (ds.watermark.logo.size || 100) * scale,
+                        height: 'auto',
                         opacity: ds.watermark.logo.opacity || 0.1,
-                        transform: `scale(${scale}) rotate(${ds.watermark.logo.rotation || 0}deg)`
+                        transform: `rotate(${ds.watermark.logo.rotation || 0}deg)`
                     }} />
                 );
             }
@@ -59,4 +54,4 @@ export function WatermarkLayer({ ds, companyLogo }: { ds: DesignSettings, compan
             {tiles}
         </View>
     );
-}
+}

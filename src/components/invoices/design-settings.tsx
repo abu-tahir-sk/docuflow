@@ -644,7 +644,31 @@ export function DesignSettingsForm() {
                 <ImageUploadField form={form} name="companyDetails.sealUrl" label="Company Seal" />
               </div>
             </div>
-            <FormField
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="designSettings.layout.logoSize"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className="flex justify-between">
+                      <FormLabel className="text-xs">Logo Size</FormLabel>
+                      <span className="text-xs font-semibold text-primary bg-primary/10 px-1.5 py-0.5 rounded">{field.value || 80}</span>
+                    </div>
+                    <FormControl>
+                      <DebouncedSlider 
+                        min={20} 
+                        max={300} 
+                        step={5} 
+                        value={field.value || 80} 
+                        onChange={field.onChange} 
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
               control={form.control}
               name="designSettings.layout.logoPosition"
               render={({ field }) => (
@@ -663,6 +687,7 @@ export function DesignSettingsForm() {
                 </FormItem>
               )}
             />
+            </div>
 
             <div className="pt-4 border-t mt-4 space-y-4">
               <h4 className="text-sm font-medium">Company Information</h4>

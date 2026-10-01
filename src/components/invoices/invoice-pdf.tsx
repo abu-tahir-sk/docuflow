@@ -535,7 +535,48 @@ export function InvoicePdf({ data, company, clients }: any) {
     data.discountType
   );
 
-  const ds = data.designSettings || defaultDesignSettings; //[cite: 2]
+  // Ensure deep merge of design settings to guarantee all defaults are present
+  const baseSettings = data.designSettings || {};
+  const ds = {
+    ...defaultDesignSettings,
+    ...baseSettings,
+    watermark: {
+      ...defaultDesignSettings.watermark,
+      ...(baseSettings.watermark || {}),
+      text: {
+        ...defaultDesignSettings.watermark.text,
+        ...(baseSettings.watermark?.text || {})
+      },
+      logo: {
+        ...defaultDesignSettings.watermark.logo,
+        ...(baseSettings.watermark?.logo || {})
+      }
+    },
+    colors: {
+      ...defaultDesignSettings.colors,
+      ...(baseSettings.colors || {})
+    },
+    typography: {
+      ...defaultDesignSettings.typography,
+      ...(baseSettings.typography || {}),
+      sizes: {
+        ...defaultDesignSettings.typography.sizes,
+        ...(baseSettings.typography?.sizes || {})
+      }
+    },
+    layout: {
+      ...defaultDesignSettings.layout,
+      ...(baseSettings.layout || {}),
+      spacing: {
+        ...defaultDesignSettings.layout.spacing,
+        ...(baseSettings.layout?.spacing || {})
+      }
+    },
+    visibility: {
+      ...defaultDesignSettings.visibility,
+      ...(baseSettings.visibility || {})
+    }
+  };
 
   return (
     <Document>

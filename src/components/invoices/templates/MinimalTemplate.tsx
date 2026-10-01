@@ -2,6 +2,7 @@ import React from 'react';
 import { Page, View, StyleSheet, Text } from '@react-pdf/renderer';
 import { WatermarkLayer } from './WatermarkLayer';
 import { CompanyInfo, ClientInfo, InvoiceMeta, InvoicePayment, InvoiceTermsAndNotes, InvoiceSignatures, InvoiceFooter, InvoiceTable, InvoiceTotals } from './shared-sections';
+import { getFontFamily } from './font-utils';
 
 export function MinimalTemplate({ data, company, clients, totals, ds }: any) {
     const selectedClient = clients?.find((c: any) => c.id === data.clientId) || null;
@@ -12,10 +13,11 @@ export function MinimalTemplate({ data, company, clients, totals, ds }: any) {
     const styles = StyleSheet.create({
         page: {
             padding: 60, // Larger margins for minimal aesthetic
-            fontFamily: 'Helvetica',
+            fontFamily: getFontFamily(ds.typography.fontFamily),
             backgroundColor: '#ffffff',
             paddingBottom: 80
         },
+        logo: { width: ds.layout.logoSize || 80, height: 'auto', objectFit: 'contain', marginBottom: 10 },
         topSection: { marginBottom: 50 },
         invoiceTitle: { fontSize: sizes.invoiceTitle + 4, color: colors.invoiceTitle, letterSpacing: -1, marginBottom: 20 },
         gridRow: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 40 },

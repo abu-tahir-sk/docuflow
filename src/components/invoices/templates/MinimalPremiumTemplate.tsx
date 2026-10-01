@@ -3,6 +3,7 @@ import { Page, Text, View, StyleSheet, Font } from '@react-pdf/renderer';
 import { format } from 'date-fns';
 import { WatermarkLayer } from './WatermarkLayer';
 import { CompanyInfo, ClientInfo, InvoiceMeta, InvoicePayment, InvoiceTermsAndNotes, InvoiceSignatures, InvoiceFooter, InvoiceTable, InvoiceTotals } from './shared-sections';
+import { getFontFamily } from './font-utils';
 
 export function MinimalPremiumTemplate({ data, company, clients, totals, ds }: any) {
   const selectedClient = clients?.find((c: any) => c.id === data.clientId) || null;
@@ -13,11 +14,12 @@ export function MinimalPremiumTemplate({ data, company, clients, totals, ds }: a
   const styles = StyleSheet.create({
     page: {
       padding: ds.layout.spacing.pageMargins || 50,
-      fontFamily: 'Helvetica',
+      fontFamily: getFontFamily(ds.typography.fontFamily),
       backgroundColor: '#ffffff',
       color: '#111827',
       paddingBottom: 80
     },
+    logo: { width: ds.layout.logoSize || 80, height: 'auto', objectFit: 'contain', marginBottom: 10 },
     header: {
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -27,24 +29,24 @@ export function MinimalPremiumTemplate({ data, company, clients, totals, ds }: a
         flex: 1
     },
     companyName: {
-      fontSize: 24,
+      fontSize: sizes.invoiceTitle - 4,
       fontWeight: 'bold',
       letterSpacing: -0.5,
       marginBottom: 4
     },
     textNormal: {
-        fontSize: 11,
+        fontSize: sizes.bodyText,
         color: '#4b5563',
         marginBottom: 2
     },
     textBold: {
-        fontSize: 12,
+        fontSize: sizes.bodyText + 1,
         fontWeight: 'bold',
         color: '#111827',
         marginBottom: 4
     },
     invoiceTag: {
-      fontSize: 12,
+      fontSize: sizes.invoiceTitle - 8,
       color: '#6b7280',
       textTransform: 'uppercase',
       letterSpacing: 1,
@@ -59,15 +61,15 @@ export function MinimalPremiumTemplate({ data, company, clients, totals, ds }: a
       flex: 1,
     },
     sectionTitle: {
-      fontSize: 10,
+      fontSize: sizes.sectionHeading,
       color: '#6b7280',
       textTransform: 'uppercase',
       letterSpacing: 0.5,
       marginBottom: 6,
     },
     metaGrid: { flexDirection: 'row', marginBottom: 4 },
-    metaLabel: { width: 100, color: '#6b7280', fontSize: 11 },
-    metaValue: { flex: 1, color: '#111827', fontSize: 11, fontWeight: 'bold' },
+    metaLabel: { width: 100, color: '#6b7280', fontSize: sizes.bodyText },
+    metaValue: { flex: 1, color: '#111827', fontSize: sizes.bodyText, fontWeight: 'bold' },
     table: {
       width: '100%',
       marginBottom: 40,
@@ -80,7 +82,7 @@ export function MinimalPremiumTemplate({ data, company, clients, totals, ds }: a
       marginBottom: 12,
     },
     thText: {
-      fontSize: 10,
+      fontSize: sizes.tableText - 1,
       color: '#6b7280',
       fontWeight: 'bold',
       textTransform: 'uppercase',
@@ -91,8 +93,8 @@ export function MinimalPremiumTemplate({ data, company, clients, totals, ds }: a
       borderBottomWidth: 1,
       borderBottomColor: '#f3f4f6',
     },
-    tdTextBold: { fontSize: 11, fontWeight: 'bold', color: '#111827' },
-    tdText: { fontSize: 11, color: '#4b5563' },
+    tdTextBold: { fontSize: sizes.tableText, fontWeight: 'bold', color: '#111827' },
+    tdText: { fontSize: sizes.tableText, color: '#4b5563' },
     summaryContainer: {
       flexDirection: 'row',
       justifyContent: 'flex-end',
@@ -116,12 +118,12 @@ export function MinimalPremiumTemplate({ data, company, clients, totals, ds }: a
       borderTopColor: '#e5e7eb',
     },
     grandTotalText: {
-      fontSize: 18,
+      fontSize: sizes.totalAmount,
       fontWeight: 'bold',
       color: '#0f172a',
     },
     footerText: {
-      fontSize: 10,
+      fontSize: sizes.footerText,
       color: '#9ca3af',
     }
   });

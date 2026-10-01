@@ -54,6 +54,7 @@ export const designSettingsSchema = z.object({
     }),
   }),
   layout: z.object({
+    logoSize: z.number().min(20).max(300).default(80),
     logoPosition: z.enum(["LEFT", "CENTER", "RIGHT"]).default("LEFT"),
     companyInfoAlignment: z.enum(["LEFT", "CENTER", "RIGHT"]).default("LEFT"),
     clientInfoLayout: z.enum(["STANDARD", "COMPACT"]).default("STANDARD"),
@@ -169,6 +170,7 @@ export const defaultDesignSettings: DesignSettings = {
     }
   },
   layout: {
+    logoSize: 80,
     logoPosition: "LEFT",
     companyInfoAlignment: "LEFT",
     clientInfoLayout: "STANDARD",

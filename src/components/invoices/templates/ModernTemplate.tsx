@@ -2,6 +2,7 @@ import React from 'react';
 import { Page, View, StyleSheet, Text } from '@react-pdf/renderer';
 import { WatermarkLayer } from './WatermarkLayer';
 import { CompanyInfo, ClientInfo, InvoiceMeta, InvoicePayment, InvoiceTermsAndNotes, InvoiceSignatures, InvoiceFooter, InvoiceTable, InvoiceTotals } from './shared-sections';
+import { getFontFamily } from './font-utils';
 
 export function ModernTemplate({ data, company, clients, totals, ds }: any) {
     const selectedClient = clients?.find((c: any) => c.id === data.clientId) || null;
@@ -10,7 +11,8 @@ export function ModernTemplate({ data, company, clients, totals, ds }: any) {
     const vis = ds.visibility;
 
     const styles = StyleSheet.create({
-        page: { padding: 0, fontFamily: 'Helvetica', backgroundColor: '#ffffff' },
+        page: { padding: 0, fontFamily: getFontFamily(ds.typography.fontFamily), backgroundColor: '#ffffff' },
+        logo: { width: ds.layout.logoSize || 80, height: 'auto', objectFit: 'contain', marginBottom: 10 },
         topBanner: { backgroundColor: colors.primary, padding: 40, color: '#ffffff', flexDirection: 'row', justifyContent: 'space-between' },
         companyCol: { flex: 1, paddingRight: 20 },
         invoiceMetaCol: { flex: 1, alignItems: 'flex-end' },
