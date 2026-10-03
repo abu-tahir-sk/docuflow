@@ -97,3 +97,39 @@ export async function sendPasswordResetEmail(email: string, token: string) {
   }
 }
 
+export async function sendDocumentEmail(to: string, subject: string, message: string, pdfBuffer: Buffer, fileName: string) {
+  try {
+    const mailOptions = {
+      from: `"DocuFlow" <${process.env.EMAIL_USER}>`,
+      to,
+      subject,
+      text: message,
+      html: `
+        <div style="font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #111827;">
+          <p style="white-space: pre-wrap;">${message}</p>
+        </div>
+      `,
+      attachments: [
+        {
+          filename: fileName,
+          content: pdfBuffer,
+          contentType: 'application/pdf',
+        },
+      ],
+    };
+
+    console.log('\n=============================================');
+    console.log('DEVELOPMENT MODE - SENDING DOCUMENT EMAIL:');
+    console.log(`To: ${to}`);
+    console.log(`Subject: ${subject}`);
+    console.log(`Attachment: ${fileName} (${pdfBuffer.length} bytes)`);
+    console.log('=============================================\n');
+
+    const info = await transporter.sendMail(mailOptions);
+    return { success: true, data: info };
+  } catch (error) {
+    console.error('Exception while sending document email via Nodemailer:', error);
+    return { success: false, error };
+  }
+}
+

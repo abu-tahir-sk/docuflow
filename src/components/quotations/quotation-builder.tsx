@@ -50,7 +50,7 @@ export function QuotationBuilder({ clients, company, initialData }: QuotationBui
             status: "DRAFT",
             issueDate: new Date(),
             validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // Default 30 days validity
-            template: "classic",
+            template: "premium",
             items: [{ description: "", quantity: 1, unit: "Item", unitPrice: 0 }],
             notes: "We look forward to partnering with your company on this project.",
             terms: "1. Quotation is valid for 30 days.\n2. 50% advance along with order confirmation.\n3. Taxes extra as applicable.",

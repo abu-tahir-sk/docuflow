@@ -6,6 +6,7 @@ import { useWatch } from "react-hook-form"
 import { InvoicePdf } from "./invoice-pdf"
 import { Button } from "@/components/ui/button"
 import { Download, Loader2 } from "lucide-react"
+import { SendEmailDialog } from "./send-email-dialog"
 
 // PDFDownloadLink shouldn't strictly need dynamic if used conditionally after mount, but doing it ensures no SSR issues.
 const PDFDownloadLink = dynamic(
@@ -46,11 +47,19 @@ export function StaticInvoicePreview({ data, company, clients }: StaticInvoicePr
 
   return (
     <div className="w-full flex flex-col items-center h-full">
-      <div className="flex justify-end w-full max-w-[210mm] p-4">
+      <div className="flex justify-end gap-2 w-full max-w-[210mm] p-4">
+        {pdfDocument && (
+          <SendEmailDialog
+            data={data}
+            company={company}
+            clients={clients}
+            pdfDocument={pdfDocument}
+          />
+        )}
         {pdfDocument && (
           <PDFDownloadLink
             document={pdfDocument}
-            fileName={`invoice-${data?.invoiceNumber || 'draft'}.pdf`}
+            fileName={`${data?.quotationNumber ? 'quotation' : 'invoice'}-${data?.invoiceNumber || data?.quotationNumber || 'draft'}.pdf`}
           >
             {({ loading }: any) => (
               <Button variant="default" size="sm" disabled={loading}>

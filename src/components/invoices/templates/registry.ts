@@ -5,8 +5,16 @@ import { MinimalPremiumTemplate } from "./MinimalPremiumTemplate";
 import { StubTemplate } from "./StubTemplate";
 import { BoldTemplate } from "./BoldTemplate";
 import { CreativeTemplate } from "./CreativeTemplate";
+import { PremiumQuotationTemplate } from "./PremiumQuotationTemplate";
 
 export const INVOICE_TEMPLATES = [
+    {
+        id: "premium",
+        name: "Premium",
+        description: "Modern premium quotation/invoice design with subtle blue accents",
+        component: PremiumQuotationTemplate,
+        thumbnail: "/templates/template-2.jpg"
+    },
     {
         id: "classic",
         name: "Classic",
