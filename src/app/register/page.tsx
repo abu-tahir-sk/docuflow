@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Create Account | DocuFlow",
   description: "Start managing your business documents with DocuFlow.",
 }
-//  lonin page or signup page
+//  lonin page or signup page  and backend
 
 export default function RegisterPage() {
   return (
